@@ -44,6 +44,11 @@ class Kwfs
      */
     private $bons;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Departements::class, inversedBy="kwfs")
+     */
+    private $departement;
+
     public function __construct()
     {
         $this->bons = new ArrayCollection();
@@ -129,6 +134,18 @@ class Kwfs
                 $bon->setKwf(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getDepartement(): ?Departements
+    {
+        return $this->departement;
+    }
+
+    public function setDepartement(?Departements $departement): self
+    {
+        $this->departement = $departement;
 
         return $this;
     }

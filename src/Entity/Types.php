@@ -34,6 +34,11 @@ class Types
      */
     private $bons;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Departements::class, inversedBy="types")
+     */
+    private $departement;
+
     public function __construct()
     {
         $this->bons = new ArrayCollection();
@@ -95,6 +100,18 @@ class Types
                 $bon->setType(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getDepartement(): ?Departements
+    {
+        return $this->departement;
+    }
+
+    public function setDepartement(?Departements $departement): self
+    {
+        $this->departement = $departement;
 
         return $this;
     }

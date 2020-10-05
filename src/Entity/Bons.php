@@ -129,6 +129,11 @@ class Bons
      */
     private $departement;
 
+    /**
+     * @ORM\Column(type="string", length=100)
+     */
+    private $numBon;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -382,6 +387,18 @@ class Bons
     public function setDepartement(?Departements $departement): self
     {
         $this->departement = $departement;
+
+        return $this;
+    }
+
+    public function getNumBon(): ?string
+    {
+        return $this->numBon;
+    }
+
+    public function setNumBon(string $numBon): self
+    {
+        $this->numBon = $numBon;
 
         return $this;
     }

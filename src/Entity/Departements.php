@@ -49,11 +49,41 @@ class Departements
      */
     private $bons;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Entreprises::class, mappedBy="departement")
+     */
+    private $entreprises;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Types::class, mappedBy="departement")
+     */
+    private $types;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Categories::class, mappedBy="departement")
+     */
+    private $categories;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Comptes::class, mappedBy="departement")
+     */
+    private $comptes;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Kwfs::class, mappedBy="departement")
+     */
+    private $kwfs;
+
     public function __construct()
     {
         $this->techniciens = new ArrayCollection();
         $this->users = new ArrayCollection();
         $this->bons = new ArrayCollection();
+        $this->entreprises = new ArrayCollection();
+        $this->types = new ArrayCollection();
+        $this->categories = new ArrayCollection();
+        $this->comptes = new ArrayCollection();
+        $this->kwfs = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -184,6 +214,161 @@ class Departements
             // set the owning side to null (unless already changed)
             if ($bon->getDepartement() === $this) {
                 $bon->setDepartement(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Entreprises[]
+     */
+    public function getEntreprises(): Collection
+    {
+        return $this->entreprises;
+    }
+
+    public function addEntreprise(Entreprises $entreprise): self
+    {
+        if (!$this->entreprises->contains($entreprise)) {
+            $this->entreprises[] = $entreprise;
+            $entreprise->setDepartement($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEntreprise(Entreprises $entreprise): self
+    {
+        if ($this->entreprises->contains($entreprise)) {
+            $this->entreprises->removeElement($entreprise);
+            // set the owning side to null (unless already changed)
+            if ($entreprise->getDepartement() === $this) {
+                $entreprise->setDepartement(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Types[]
+     */
+    public function getTypes(): Collection
+    {
+        return $this->types;
+    }
+
+    public function addType(Types $type): self
+    {
+        if (!$this->types->contains($type)) {
+            $this->types[] = $type;
+            $type->setDepartement($this);
+        }
+
+        return $this;
+    }
+
+    public function removeType(Types $type): self
+    {
+        if ($this->types->contains($type)) {
+            $this->types->removeElement($type);
+            // set the owning side to null (unless already changed)
+            if ($type->getDepartement() === $this) {
+                $type->setDepartement(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Categories[]
+     */
+    public function getCategories(): Collection
+    {
+        return $this->categories;
+    }
+
+    public function addCategory(Categories $category): self
+    {
+        if (!$this->categories->contains($category)) {
+            $this->categories[] = $category;
+            $category->setDepartement($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCategory(Categories $category): self
+    {
+        if ($this->categories->contains($category)) {
+            $this->categories->removeElement($category);
+            // set the owning side to null (unless already changed)
+            if ($category->getDepartement() === $this) {
+                $category->setDepartement(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Comptes[]
+     */
+    public function getComptes(): Collection
+    {
+        return $this->comptes;
+    }
+
+    public function addCompte(Comptes $compte): self
+    {
+        if (!$this->comptes->contains($compte)) {
+            $this->comptes[] = $compte;
+            $compte->setDepartement($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCompte(Comptes $compte): self
+    {
+        if ($this->comptes->contains($compte)) {
+            $this->comptes->removeElement($compte);
+            // set the owning side to null (unless already changed)
+            if ($compte->getDepartement() === $this) {
+                $compte->setDepartement(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Kwfs[]
+     */
+    public function getKwfs(): Collection
+    {
+        return $this->kwfs;
+    }
+
+    public function addKwf(Kwfs $kwf): self
+    {
+        if (!$this->kwfs->contains($kwf)) {
+            $this->kwfs[] = $kwf;
+            $kwf->setDepartement($this);
+        }
+
+        return $this;
+    }
+
+    public function removeKwf(Kwfs $kwf): self
+    {
+        if ($this->kwfs->contains($kwf)) {
+            $this->kwfs->removeElement($kwf);
+            // set the owning side to null (unless already changed)
+            if ($kwf->getDepartement() === $this) {
+                $kwf->setDepartement(null);
             }
         }
 

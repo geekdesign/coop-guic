@@ -2,15 +2,158 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\Categories;
+use App\Entity\Comptes;
+use App\Entity\Departements;
+use App\Entity\Entreprises;
+use App\Entity\Kwfs;
+use App\Entity\Pdvs;
+use App\Entity\Techniciens;
+use App\Entity\Types;
+use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
+use Faker\Factory;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class AppFixtures extends Fixture
 {
+    /**
+     * L'encodeur de mot de passe
+     * 
+     * @var UserPasswordEncoderInterface
+     */
+    private $encoder;
+
+    public function __construct(UserPasswordEncoderInterface $encoder)
+    {
+        $this->encoder = $encoder;
+    }
+
     public function load(ObjectManager $manager)
     {
-        // $product = new Product();
-        // $manager->persist($product);
+        $faker = Factory::create('fr_CH');
+
+        $departement1 = new Departements();
+        $departement1->setNom('Sécurité');
+
+        $manager->persist($departement1);
+
+        $departement2 = new Departements();
+        $departement2->setNom('Total Store');
+
+        $manager->persist($departement2);
+
+        for ($e=0; $e < 30; $e++) { 
+            $entreprise = new Entreprises();
+            $entreprise ->setNom($faker->company)
+                        ->setRue($faker->address)
+                        ->setNpa($faker->postcode)
+                        ->setLieu($faker->city)
+                        ->setTelephone($faker->e164PhoneNumber)
+                        ->setFax($faker->e164PhoneNumber)
+                        ->setMail($faker->email)
+                        ->setDepartement($faker->randomElement([$departement1, $departement2]))
+                        ->setSupprimer(false);
+         
+            $manager->persist($entreprise);
+        }
+
+        for ($t=0; $t < 7; $t++) { 
+            $technicien = new Techniciens();
+            $technicien ->setNom($faker->lastName())
+                        ->setDepartement($faker->randomElement([$departement1, $departement2]))
+                        ->setPrenom($faker->firstName())
+                        ->setMail($faker->email)
+                        ->setTelephone($faker->PhoneNumber)
+                        ->setActif(true);
+            
+            $manager->persist($technicien);
+            
+        }
+        
+        $admin = new User();
+        $adminhash = $this->encoder->encodePassword($admin, "scpie");
+        $admin  ->setUsername('scpie')
+                ->setDepartement($faker->randomElement([$departement1, $departement2]))
+                ->setNom('Schütz')
+                ->setPrenom('Pierre-Alain')
+                ->setMail($faker->email)
+                ->setPassword($adminhash)
+                ->setSupprimer(false);
+        $manager->persist($admin);
+
+        for ($u=0; $u < 10; $u++) { 
+            $user = new User();
+            $hash = $this->encoder->encodePassword($user, "password");
+            $user   ->setUsername($faker->userName)
+                    ->setDepartement($faker->randomElement([$departement1, $departement2]))
+                    ->setNom($faker->firstName())
+                    ->setPrenom($faker->lastName())
+                    ->setMail($faker->email)
+                    ->setPassword($hash)
+                    ->setSupprimer(false);
+            
+            $manager->persist($user);
+        }
+
+        for ($c=0; $c < 25; $c++) { 
+            $compte = new Comptes();
+            $compte ->setNum($faker->numberBetween($min = 7000, $max = 9900))
+                    ->setNom($faker->sentence($nbWords = 5, $variableNbWords = true))
+                    ->setActif(true)
+                    ->setDepartement($faker->randomElement([$departement1, $departement2]));
+            $manager->persist($compte);
+        }
+
+        for ($cat=0; $cat < 10; $cat++) { 
+            $categories = new Categories();
+            $categories ->setNom($faker->sentence($nbWords = 2, $variableNbWords = true))
+                        ->setActif(true)
+                        ->setDepartement($faker->randomElement([$departement1, $departement2]));
+            $manager->persist($categories);
+        }
+
+        for ($k=0; $k < 15; $k++) { 
+            $kwf = new Kwfs();
+            $kwf    ->setNom($faker->lastName())
+                    ->setDepartement($faker->randomElement([$departement1, $departement2]))
+                    ->setPrenom($faker->firstName())
+                    ->setEmail($faker->email)
+                    ->setSupprimer(false);
+            $manager->persist($kwf);
+        }
+
+        for ($t=0; $t < 10; $t++) { 
+            $type = new Types();
+            $type ->setNom($faker->sentence($nbWords = 2, $variableNbWords = true))
+                        ->setActif(true)
+                        ->setDepartement($faker->randomElement([$departement1, $departement2]));
+            $manager->persist($type);
+        }
+
+
+        for ($p=0; $p < 180; $p++) { 
+            $pdv = new Pdvs();
+
+            $lieu = $faker->city;
+            $nom = $lieu . " " . $faker->word;
+            $format = $faker->randomElement($array = array ('a','b','c')) . $faker->numberBetween($min = 150, $max = 3000);
+
+            $pdv->setSap($faker->numberBetween($min = 1000, $max = 5800))
+                ->setNom($nom)
+                ->setRue($faker->address)
+                ->setLieu($lieu)
+                ->setNpa($faker->postcode)
+                ->setTelephone($faker->e164PhoneNumber)
+                ->setFax($faker->e164PhoneNumber)
+                ->setEmail($faker->email)
+                ->setFormat($format)
+                ->setSupprimer(false);
+                
+            $manager->persist($pdv);
+        }
+        
 
         $manager->flush();
     }
