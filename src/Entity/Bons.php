@@ -2,7 +2,10 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use App\Repository\BonsRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
@@ -10,10 +13,27 @@ use Symfony\Component\Serializer\Annotation\Groups;
 /**
  * @ORM\Entity(repositoryClass=BonsRepository::class)
  * @ApiResource(
+ *   attributes={
+ *      "pagination_enabled" = true,
+ *      "order"={"createdAt": "DESC"}
+ *   },
  *   normalizationContext={
  *      "groups" = {"bons_read"}
- * }
+ *      }
  * )
+ * @ApiFilter(SearchFilter::class, properties={
+ *      "pdv.sap": "partial",
+ *      "pdv.nom": "partial",
+ *      "numBon": "partial",
+ *      "entreprise.nom": "partial",
+ *      "createdBy.nom": "partial",
+ *      "createdBy.prenom": "partial",
+ *      "technicien.nom": "partial",
+ *      "technicien.prenom": "partial",
+ *      "etat.nom": "partial",
+ *      "sujet": "partial",
+ * })
+ * @ApiFilter(OrderFilter::class)
  */
 class Bons
 {

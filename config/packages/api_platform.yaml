@@ -5,3 +5,13 @@ api_platform:
         json: ['application/merge-patch+json']
     swagger:
         versions: [3]
+    # The title of the API.
+    title: 'Coop - GuicAPI'
+    # Set this to false if you want Webby to disappear.
+    show_webby: false
+    collection:
+        pagination:
+            enabled: false
+            client_enabled: true
+            items_per_page: 25
+
