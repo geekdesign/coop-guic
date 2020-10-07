@@ -46,8 +46,13 @@ class AppFixtures extends Fixture
 
         $manager->persist($departement2);
 
+        $departement3 = new Departements();
+        $departement3->setNom('Test DEV');
+
+        $manager->persist($departement3);
+
         $entrepriseArray=array();
-        for ($e=0; $e < 30; $e++) { 
+        for ($e=0; $e < 40; $e++) { 
             $entreprise = new Entreprises();
             $entreprise ->setNom($faker->company)
                         ->setRue($faker->address)
@@ -56,7 +61,7 @@ class AppFixtures extends Fixture
                         ->setTelephone($faker->e164PhoneNumber)
                         ->setFax($faker->e164PhoneNumber)
                         ->setMail($faker->email)
-                        ->setDepartement($faker->randomElement([$departement1, $departement2]))
+                        ->setDepartement($faker->randomElement([$departement1, $departement2, $departement3]))
                         ->setSupprimer(false);
 
             array_push($entrepriseArray, $entreprise);            
@@ -65,10 +70,10 @@ class AppFixtures extends Fixture
         }
 
         $technicienArray=array();
-        for ($t=0; $t < 7; $t++) { 
+        for ($t=0; $t < 10; $t++) { 
             $technicien = new Techniciens();
             $technicien ->setNom($faker->lastName())
-                        ->setDepartement($faker->randomElement([$departement1, $departement2]))
+                        ->setDepartement($faker->randomElement([$departement1, $departement2, $departement3]))
                         ->setPrenom($faker->firstName())
                         ->setMail($faker->email)
                         ->setTelephone($faker->PhoneNumber)
@@ -83,7 +88,7 @@ class AppFixtures extends Fixture
         $admin = new User();
         $adminhash = $this->encoder->encodePassword($admin, "scpie");
         $admin  ->setUsername('scpie')
-                ->setDepartement($faker->randomElement([$departement1, $departement2]))
+                ->setDepartement($faker->randomElement([$departement1, $departement2, $departement3]))
                 ->setNom('Schütz')
                 ->setPrenom('Pierre-Alain')
                 ->setMail($faker->email)
@@ -92,11 +97,11 @@ class AppFixtures extends Fixture
         $manager->persist($admin);
 
         $userArray=array();
-        for ($u=0; $u < 10; $u++) { 
+        for ($u=0; $u < 15; $u++) { 
             $user = new User();
             $hash = $this->encoder->encodePassword($user, "password");
             $user   ->setUsername($faker->userName)
-                    ->setDepartement($faker->randomElement([$departement1, $departement2]))
+                    ->setDepartement($faker->randomElement([$departement1, $departement2, $departement3]))
                     ->setNom($faker->firstName())
                     ->setPrenom($faker->lastName())
                     ->setMail($faker->email)
@@ -109,12 +114,12 @@ class AppFixtures extends Fixture
         }
 
         $compteArray=array();
-        for ($c=0; $c < 25; $c++) { 
+        for ($c=0; $c < 40; $c++) { 
             $compte = new Comptes();
             $compte ->setNum($faker->numberBetween($min = 7000, $max = 9900))
                     ->setNom($faker->sentence($nbWords = 5, $variableNbWords = true))
                     ->setActif(true)
-                    ->setDepartement($faker->randomElement([$departement1, $departement2]));
+                    ->setDepartement($faker->randomElement([$departement1, $departement2, $departement3]));
 
             array_push($compteArray, $compte);
 
@@ -122,11 +127,11 @@ class AppFixtures extends Fixture
         }
 
         $categoriesArray=array();
-        for ($cat=0; $cat < 10; $cat++) { 
+        for ($cat=0; $cat < 15; $cat++) { 
             $categories = new Categories();
             $categories ->setNom($faker->sentence($nbWords = 2, $variableNbWords = true))
                         ->setActif(true)
-                        ->setDepartement($faker->randomElement([$departement1, $departement2]));
+                        ->setDepartement($faker->randomElement([$departement1, $departement2, $departement3]));
             
             array_push($categoriesArray, $categories);
             
@@ -137,7 +142,7 @@ class AppFixtures extends Fixture
         for ($k=0; $k < 15; $k++) { 
             $kwf = new Kwfs();
             $kwf    ->setNom($faker->lastName())
-                    ->setDepartement($faker->randomElement([$departement1, $departement2]))
+                    ->setDepartement($faker->randomElement([$departement1, $departement2, $departement3]))
                     ->setPrenom($faker->firstName())
                     ->setEmail($faker->email)
                     ->setSupprimer(false);
@@ -148,11 +153,11 @@ class AppFixtures extends Fixture
         }
 
         $typeArray=array();
-        for ($t=0; $t < 10; $t++) { 
+        for ($t=0; $t < 15; $t++) { 
             $type = new Types();
             $type ->setNom($faker->sentence($nbWords = 2, $variableNbWords = true))
                         ->setActif(true)
-                        ->setDepartement($faker->randomElement([$departement1, $departement2]));
+                        ->setDepartement($faker->randomElement([$departement1, $departement2, $departement3]));
             array_push($typeArray, $type);
             
             $manager->persist($type);
@@ -189,7 +194,7 @@ class AppFixtures extends Fixture
             $bon = new Bons;
             $remarque = $faker->text($maxNbChars = 100); 
             $bon->setCreatedAt($faker->dateTimeBetween($startDate = '-6 month', $endDate = 'now', $timezone = null))
-                ->setDepartement($faker->randomElement([$departement1, $departement2]))
+                ->setDepartement($faker->randomElement([$departement1, $departement2, $departement3]))
                 ->setTechnicien($faker->randomElement($technicienArray))
                 ->setEntreprise($faker->randomElement($entrepriseArray))
                 ->setCreatedBy($faker->randomElement($userArray))

@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Annotation\ApiSubresource;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use App\Repository\DepartementsRepository;
@@ -52,41 +53,49 @@ class Departements
 
     /**
      * @ORM\OneToMany(targetEntity=Techniciens::class, mappedBy="departement")
+     * @ApiSubresource
      */
     private $techniciens;
 
     /**
      * @ORM\OneToMany(targetEntity=User::class, mappedBy="departement")
+     * @ApiSubresource
      */
     private $users;
 
     /**
      * @ORM\OneToMany(targetEntity=Bons::class, mappedBy="departement")
+     * @ApiSubresource
      */
     private $bons;
 
     /**
      * @ORM\OneToMany(targetEntity=Entreprises::class, mappedBy="departement")
+     * @ApiSubresource
      */
     private $entreprises;
 
     /**
      * @ORM\OneToMany(targetEntity=Types::class, mappedBy="departement")
+     * @ApiSubresource
      */
     private $types;
 
     /**
      * @ORM\OneToMany(targetEntity=Categories::class, mappedBy="departement")
+     * @ApiSubresource
      */
     private $categories;
 
     /**
      * @ORM\OneToMany(targetEntity=Comptes::class, mappedBy="departement")
+     * @ApiSubresource
      */
     private $comptes;
 
     /**
      * @ORM\OneToMany(targetEntity=Kwfs::class, mappedBy="departement")
+     * @ApiSubresource
      */
     private $kwfs;
 

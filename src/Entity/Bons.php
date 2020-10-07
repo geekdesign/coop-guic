@@ -6,6 +6,7 @@ use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Annotation\ApiResource;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
+use App\Entity\Pdvs;
 use App\Repository\BonsRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
@@ -183,7 +184,7 @@ class Bons
      * @Groups({"bons_read", "entreprises_read", "pdvs_read", "techniciens_read", "users_read", "comptes_read"})
      */
     private $numBon;
-
+    
     public function getId(): ?int
     {
         return $this->id;

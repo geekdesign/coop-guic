@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Annotation\ApiSubresource;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use App\Repository\EtatsRepository;
@@ -47,6 +48,7 @@ class Etats
     /**
      * @ORM\OneToMany(targetEntity=Bons::class, mappedBy="etat")
      * @Groups({"etats_read"})
+     * @ApiSubresource
      */
     private $bons;
 

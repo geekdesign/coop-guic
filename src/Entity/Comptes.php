@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Annotation\ApiSubresource;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use App\Repository\ComptesRepository;
@@ -53,6 +54,7 @@ class Comptes
     /**
      * @ORM\OneToMany(targetEntity=Bons::class, mappedBy="numCompte")
      * @Groups({"comptes_read"})
+     * @ApiSubresource
      */
     private $bons;
 

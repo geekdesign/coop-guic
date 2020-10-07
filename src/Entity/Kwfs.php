@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Annotation\ApiSubresource;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use App\Repository\KwfsRepository;
@@ -59,6 +60,7 @@ class Kwfs
     /**
      * @ORM\OneToMany(targetEntity=Bons::class, mappedBy="kwf")
      * @Groups({"kwfs_read"})
+     * @ApiSubresource
      */
     private $bons;
 
