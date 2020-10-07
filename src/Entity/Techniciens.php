@@ -2,13 +2,20 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\TechniciensRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=TechniciensRepository::class)
+ * @ApiResource(
+ *   normalizationContext={
+ *      "groups" = {"techniciens_read"}
+ * }
+ * )
  */
 class Techniciens
 {
@@ -16,41 +23,49 @@ class Techniciens
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups({"techniciens_read","bons_read"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"techniciens_read","bons_read"})
      */
     private $nom;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"techniciens_read","bons_read"})
      */
     private $prenom;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"techniciens_read","bons_read"})
      */
     private $mail;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"techniciens_read","bons_read"})
      */
     private $telephone;
 
     /**
      * @ORM\ManyToOne(targetEntity=Departements::class, inversedBy="techniciens")
+     * @Groups({"techniciens_read"})
      */
     private $departement;
 
     /**
      * @ORM\Column(type="boolean", nullable=true)
+     * @Groups({"techniciens_read"})
      */
     private $actif;
 
     /**
      * @ORM\OneToMany(targetEntity=Bons::class, mappedBy="technicien")
+     * @Groups({"techniciens_read"})
      */
     private $bons;
 

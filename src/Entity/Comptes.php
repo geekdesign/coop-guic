@@ -2,13 +2,20 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\ComptesRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=ComptesRepository::class)
+ * @ApiResource(
+ *   normalizationContext={
+ *      "groups" = {"comptes_read"}
+ * }
+ * )
  */
 class Comptes
 {
@@ -16,31 +23,37 @@ class Comptes
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups({"comptes_read", "bons_read"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="integer")
+     * @Groups({"comptes_read","bons_read", "pdvs_read"})
      */
     private $num;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"comptes_read","bons_read", "pdvs_read"})
      */
     private $nom;
 
     /**
      * @ORM\Column(type="boolean", nullable=true)
+     * @Groups({"comptes_read"})
      */
     private $actif;
 
     /**
      * @ORM\OneToMany(targetEntity=Bons::class, mappedBy="numCompte")
+     * @Groups({"comptes_read"})
      */
     private $bons;
 
     /**
      * @ORM\ManyToOne(targetEntity=Departements::class, inversedBy="comptes")
+     * @Groups({"comptes_read"})
      */
     private $departement;
 

@@ -2,13 +2,20 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\TypesRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=TypesRepository::class)
+ * @ApiResource(
+ *   normalizationContext={
+ *      "groups" = {"types_read"}
+ * }
+ * )
  */
 class Types
 {
@@ -16,26 +23,31 @@ class Types
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups({"types_read", "bons_read"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"types_read", "bons_read", "entreprises_read", "pdvs_read", "techniciens_read", "users_read", "comptes_read"})
      */
     private $nom;
 
     /**
      * @ORM\Column(type="boolean", nullable=true)
+     * @Groups({"types_read"})
      */
     private $actif;
 
     /**
      * @ORM\OneToMany(targetEntity=Bons::class, mappedBy="type")
+     * @Groups({"types_read"})
      */
     private $bons;
 
     /**
      * @ORM\ManyToOne(targetEntity=Departements::class, inversedBy="types")
+     * @Groups({"types_read"})
      */
     private $departement;
 

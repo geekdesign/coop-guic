@@ -2,13 +2,20 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\CategoriesRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=CategoriesRepository::class)
+ * @ApiResource
+ *   normalizationContext={
+ *      "groups" = {"categories_read"}
+ * }
+ * )
  */
 class Categories
 {
@@ -16,16 +23,19 @@ class Categories
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups({"categories_read", "bons_read"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"categories_read", "bons_read", "pdvs_read", "entreprises_read", "techniciens_read", "users_read", "comptes_read"})
      */
     private $nom;
 
     /**
      * @ORM\Column(type="boolean", nullable=true)
+     * @Groups({"categories_read"})
      */
     private $actif;
 
@@ -36,6 +46,7 @@ class Categories
 
     /**
      * @ORM\ManyToOne(targetEntity=Departements::class, inversedBy="categories")
+     * @Groups({"categories_read"})
      */
     private $departement;
 

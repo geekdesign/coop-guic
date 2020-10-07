@@ -2,13 +2,20 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\PdvsRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=PdvsRepository::class)
+ * @ApiResource(
+ *   normalizationContext={
+ *      "groups" = {"pdvs_read"}
+ * }
+ * )
  */
 class Pdvs
 {
@@ -16,61 +23,73 @@ class Pdvs
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups({"pdvs_read", "bons_read"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="integer")
+     * @Groups({"pdvs_read", "bons_read"})
      */
     private $sap;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"pdvs_read", "bons_read", "entreprises_read", "techniciens_read", "users_read", "comptes_read"})
      */
     private $nom;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"pdvs_read", "bons_read"})
      */
     private $rue;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
+     * @Groups({"pdvs_read", "bons_read"})
      */
     private $npa;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"pdvs_read", "bons_read"})
      */
     private $lieu;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"pdvs_read", "bons_read"})
      */
     private $telephone;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"pdvs_read", "bons_read"})
      */
     private $fax;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"pdvs_read", "bons_read"})
      */
     private $email;
 
     /**
      * @ORM\Column(type="string", length=100, nullable=true)
+     * @Groups({"pdvs_read"})
      */
     private $format;
 
     /**
      * @ORM\Column(type="boolean", nullable=true)
+     * @Groups({"pdvs_read"})
      */
     private $supprimer;
 
     /**
      * @ORM\OneToMany(targetEntity=Bons::class, mappedBy="pdv")
+     * @Groups({"pdvs_read"})
      */
     private $bons;
 

@@ -2,13 +2,20 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\DepartementsRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-
+use Symfony\Component\Serializer\Annotation\Groups;
+  
 /**
  * @ORM\Entity(repositoryClass=DepartementsRepository::class)
+ * @ApiResource(
+ *   normalizationContext={
+ *      "groups" = {"departement_read"}
+ * }
+ * )
  */
 class Departements
 {
@@ -16,21 +23,25 @@ class Departements
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups({"departement_read"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"departement_read", "techniciens_read", "users_read"})
      */
     private $nom;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"departement_read"})
      */
     private $logo;
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     * @Groups({"departement_read"})
      */
     private $remarquesBon;
 

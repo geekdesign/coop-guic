@@ -2,14 +2,21 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
+ * @ApiResource(
+ *   normalizationContext={
+ *      "groups" = {"users_read"}
+ * }
+ * )
  */
 class User implements UserInterface
 {
@@ -17,16 +24,19 @@ class User implements UserInterface
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups({"users_read", "bons_read"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
+     * @Groups({"users_read", "bons_read"})
      */
     private $username;
 
     /**
      * @ORM\Column(type="json")
+     * @Groups({"users_read", "bons_read"})
      */
     private $roles = [];
 
@@ -38,37 +48,44 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"users_read", "bons_read", "entreprises_read", "techniciens_read", "comptes_read"})
      */
     private $nom;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"users_read", "bons_read", "entreprises_read", "techniciens_read", "comptes_read"})
      */
     private $prenom;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"users_read", "bons_read"})
      */
     private $mail;
 
     /**
      * @ORM\ManyToOne(targetEntity=Departements::class, inversedBy="users")
      * @ORM\JoinColumn(nullable=false)
+     * @Groups({"users_read"})
      */
     private $departement;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"bons_read"})
      */
     private $signature;
 
     /**
      * @ORM\Column(type="boolean", nullable=true)
+     * @Groups({"users_read"})
      */
     private $supprimer;
 
     /**
      * @ORM\OneToMany(targetEntity=Bons::class, mappedBy="createdBy")
+     * @Groups({"users_read"})
      */
     private $bons;
 

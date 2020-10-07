@@ -2,11 +2,18 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\BonsRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=BonsRepository::class)
+ * @ApiResource(
+ *   normalizationContext={
+ *      "groups" = {"bons_read"}
+ * }
+ * )
  */
 class Bons
 {
@@ -14,123 +21,146 @@ class Bons
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups({"bons_read"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="datetime")
+     * @Groups({"bons_read", "pdvs_read", "entreprises_read", "techniciens_read", "users_read","comptes_read"})
      */
     private $createdAt;
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="bons")
      * @ORM\JoinColumn(nullable=false)
+     * @Groups({"bons_read", "entreprises_read", "techniciens_read", "comptes_read"})
      */
     private $createdBy;
 
     /**
      * @ORM\ManyToOne(targetEntity=Techniciens::class, inversedBy="bons")
+     * @Groups({"bons_read"})
      */
     private $technicien;
 
     /**
      * @ORM\ManyToOne(targetEntity=Entreprises::class, inversedBy="bons")
      * @ORM\JoinColumn(nullable=false)
+     * @Groups({"bons_read", "pdvs_read", "techniciens_read", "users_read", "comptes_read"})
      */
     private $entreprise;
 
     /**
      * @ORM\ManyToOne(targetEntity=Pdvs::class, inversedBy="bons")
      * @ORM\JoinColumn(nullable=false)
+     * @Groups({"bons_read", "entreprises_read", "techniciens_read", "users_read", "comptes_read"})
      */
     private $pdv;
 
     /**
      * @ORM\Column(type="text")
+     * @Groups({"bons_read", "pdvs_read", "entreprises_read", "techniciens_read", "users_read", "comptes_read"})
      */
     private $sujet;
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     * @Groups({"bons_read"})
      */
     private $description;
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     * @Groups({"bons_read"})
      */
     private $remarque;
 
     /**
      * @ORM\ManyToOne(targetEntity=Types::class, inversedBy="bons")
      * @ORM\JoinColumn(nullable=false)
+     * @Groups({"bons_read", "pdvs_read", "entreprises_read", "techniciens_read", "users_read"})
      */
     private $type;
 
     /**
      * @ORM\ManyToOne(targetEntity=Categories::class, inversedBy="bons")
      * @ORM\JoinColumn(nullable=false)
+     * @Groups({"bons_read", "pdvs_read", "entreprises_read", "techniciens_read", "users_read"})
      */
     private $categorie;
 
     /**
      * @ORM\ManyToOne(targetEntity=Kwfs::class, inversedBy="bons")
      * @ORM\JoinColumn(nullable=false)
+     * @Groups({"bons_read"})
      */
     private $kwf;
 
     /**
      * @ORM\Column(type="boolean", nullable=true)
+     * @Groups({"bons_read", "pdvs_read"})
      */
     private $garantie;
 
     /**
      * @ORM\Column(type="string", length=100, nullable=true)
+     * @Groups({"bons_read"})
      */
     private $numCredit;
 
     /**
      * @ORM\ManyToOne(targetEntity=Comptes::class, inversedBy="bons")
+     * @Groups({"bons_read", "pdvs_read"})
      */
     private $numCompte;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"bons_read"})
      */
     private $codeSap;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
+     * @Groups({"bons_read"})
      */
     private $prixHt;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
+     * @Groups({"bons_read"})
      */
     private $prixTtc;
 
     /**
      * @ORM\ManyToOne(targetEntity=Etats::class, inversedBy="bons")
+     * @Groups({"bons_read", "pdvs_read", "entreprises_read", "techniciens_read", "users_read", "comptes_read"})
      */
     private $etat;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
+     * @Groups({"bons_read", "pdvs_read", "comptes_read"})
      */
     private $closedAt;
 
     /**
      * @ORM\Column(type="boolean", nullable=true)
+     * @Groups({"bons_read"})
      */
     private $supprimer;
 
     /**
      * @ORM\ManyToOne(targetEntity=Departements::class, inversedBy="bons")
      * @ORM\JoinColumn(nullable=false)
+     * @Groups({"bons_read"})
      */
     private $departement;
 
     /**
      * @ORM\Column(type="string", length=100)
+     * @Groups({"bons_read", "entreprises_read", "pdvs_read", "techniciens_read", "users_read", "comptes_read"})
      */
     private $numBon;
 
