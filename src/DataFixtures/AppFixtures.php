@@ -7,6 +7,7 @@ use App\Entity\Categories;
 use App\Entity\Comptes;
 use App\Entity\Departements;
 use App\Entity\Entreprises;
+use App\Entity\Etats;
 use App\Entity\Kwfs;
 use App\Entity\Pdvs;
 use App\Entity\Techniciens;
@@ -50,6 +51,12 @@ class AppFixtures extends Fixture
         $departement3->setNom('Test DEV');
 
         $manager->persist($departement3);
+
+        $etatBase = new Etats();
+        $etatBase->setNom('Envoyé')
+                 ->setActif(true);
+
+        $manager->persist($etatBase);
 
         $entrepriseArray=array();
         for ($e=0; $e < 40; $e++) { 

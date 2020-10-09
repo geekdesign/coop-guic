@@ -12,6 +12,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=KwfsRepository::class)
@@ -36,18 +37,37 @@ class Kwfs
     /**
      * @ORM\Column(type="string", length=100)
      * @Groups({"kwfs_read", "bons_read"})
+     * @Assert\NotBlank(message="Le nom est obligatoire !")
+     * @Assert\Length(
+     *      min = 3,
+     *      max = 100,
+     *      minMessage = "Le nom doit faire entre 3 et 100 caractères !",
+     *      maxMessage = "Le nom doit faire entre 3 et 100 caractères !",
+     *      allowEmptyString = false
+     * )
      */
     private $nom;
 
     /**
      * @ORM\Column(type="string", length=100, nullable=true)
      * @Groups({"kwfs_read", "bons_read"})
+     * @Assert\NotBlank(message="Le prénom est obligatoire !")
+     * @Assert\Length(
+     *      min = 3,
+     *      max = 100,
+     *      minMessage = "Le prénom doit faire entre 3 et 100 caractères !",
+     *      maxMessage = "Le prénom doit faire entre 3 et 100 caractères !",
+     *      allowEmptyString = false
+     * )
      */
     private $prenom;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      * @Groups({"kwfs_read", "bons_read"})
+     * @Assert\Email(
+     *     message = "La valeur saisie n'est pas un email valide !"
+     * )
      */
     private $email;
 

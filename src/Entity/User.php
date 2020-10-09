@@ -13,6 +13,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
@@ -37,6 +38,14 @@ class User implements UserInterface
     /**
      * @ORM\Column(type="string", length=180, unique=true)
      * @Groups({"users_read", "bons_read"})
+     * @Assert\NotBlank(message="Le username est obligatoire !")
+     * @Assert\Length(
+     *      min = 3,
+     *      max = 180,
+     *      minMessage = "Le username doit faire entre 3 et 180 caractères !",
+     *      maxMessage = "Le username doit faire entre 3 et 180 caractères !",
+     *      allowEmptyString = false
+     * )
      */
     private $username;
 
@@ -55,18 +64,38 @@ class User implements UserInterface
     /**
      * @ORM\Column(type="string", length=255)
      * @Groups({"users_read", "bons_read", "entreprises_read", "techniciens_read", "comptes_read"})
+     * @Assert\NotBlank(message="Le nom est obligatoire !")
+     * @Assert\Length(
+     *      min = 3,
+     *      max = 255,
+     *      minMessage = "Le nom doit faire entre 3 et 255 caractères !",
+     *      maxMessage = "Le nom doit faire entre 3 et 255 caractères !",
+     *      allowEmptyString = false
+     * )
      */
     private $nom;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Groups({"users_read", "bons_read", "entreprises_read", "techniciens_read", "comptes_read"})
+     * @Assert\NotBlank(message="Le prénom est obligatoire !")
+     * @Assert\Length(
+     *      min = 3,
+     *      max = 255,
+     *      minMessage = "Le prénom doit faire entre 3 et 255 caractères !",
+     *      maxMessage = "Le prénom doit faire entre 3 et 255 caractères !",
+     *      allowEmptyString = false
+     * )
      */
     private $prenom;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      * @Groups({"users_read", "bons_read"})
+     * @Assert\NotBlank(message="L'email est obligatoire !")
+     * @Assert\Email(
+     *     message = "La valeur saisie n'est pas un email valide !"
+     * )
      */
     private $mail;
 

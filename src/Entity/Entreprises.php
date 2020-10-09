@@ -12,6 +12,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=EntreprisesRepository::class)
@@ -36,24 +37,55 @@ class Entreprises
     /**
      * @ORM\Column(type="string", length=255)
      * @Groups({"entreprises_read", "bons_read", "pdvs_read", "techniciens_read", "users_read", "comptes_read"})
+     * @Assert\NotBlank(message="Le nom de l'entreprise est obligatoire !")
+     * @Assert\Length(
+     *      min = 3,
+     *      max = 255,
+     *      minMessage = "Le nom de l'entreprise doit faire entre 3 et 255 caractères !",
+     *      maxMessage = "Le nom de l'entreprise doit faire entre 3 et 255 caractères !",
+     *      allowEmptyString = false
+     * )
      */
     private $nom;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      * @Groups({"entreprises_read", "bons_read"})
+     * @Assert\NotBlank(message="La rue est obligatoire !")
+     * @Assert\Length(
+     *      min = 3,
+     *      max = 255,
+     *      minMessage = "La rue doit faire entre 3 et 255 caractères !",
+     *      maxMessage = "La rue doit faire entre 3 et 255 caractères !",
+     *      allowEmptyString = false
+     * )
      */
     private $rue;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
      * @Groups({"entreprises_read", "bons_read"})
+     * @Assert\Length(
+     *      min = 4,
+     *      max = 4,
+     *      minMessage = "Le code postal doit contenir 4 chiffres au minimum",
+     *      maxMessage = "Le code postal doit contenir 4 chiffres au maximum",
+     *      allowEmptyString = false
+     * )
      */
     private $npa;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      * @Groups({"entreprises_read", "bons_read"})
+     * @Assert\NotBlank(message="Le lieu est obligatoire !")
+     * @Assert\Length(
+     *      min = 3,
+     *      max = 255,
+     *      minMessage = "Le lieu doit faire entre 3 et 255 caractères !",
+     *      maxMessage = "Le lieu doit faire entre 3 et 255 caractères !",
+     *      allowEmptyString = false
+     * )
      */
     private $lieu;
 
@@ -72,6 +104,9 @@ class Entreprises
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      * @Groups({"entreprises_read", "bons_read"})
+     * @Assert\Email(
+     *     message = "La valeur saisie n'est pas un email valide !"
+     * )
      */
     private $mail;
 

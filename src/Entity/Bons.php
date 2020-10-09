@@ -10,6 +10,7 @@ use App\Entity\Pdvs;
 use App\Repository\BonsRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=BonsRepository::class)
@@ -69,6 +70,7 @@ class Bons
      * @ORM\ManyToOne(targetEntity=Entreprises::class, inversedBy="bons")
      * @ORM\JoinColumn(nullable=false)
      * @Groups({"bons_read", "pdvs_read", "techniciens_read", "users_read", "comptes_read"})
+     * @Assert\NotBlank(message="Une entreprise est obligatoire !")
      */
     private $entreprise;
 
@@ -76,12 +78,18 @@ class Bons
      * @ORM\ManyToOne(targetEntity=Pdvs::class, inversedBy="bons")
      * @ORM\JoinColumn(nullable=false)
      * @Groups({"bons_read", "entreprises_read", "techniciens_read", "users_read", "comptes_read"})
+     * @Assert\NotBlank(message="Le PDV est obligatoire !")
      */
     private $pdv;
 
     /**
      * @ORM\Column(type="text")
      * @Groups({"bons_read", "pdvs_read", "entreprises_read", "techniciens_read", "users_read", "comptes_read"})
+     * @Assert\NotBlank(message="Le sujet est obligatoire !")
+     * @Assert\Length(
+     *      min = 5,
+     *      minMessage = "Le sujet doit faire au minimum 5 !",
+     * )
      */
     private $sujet;
 
@@ -101,6 +109,7 @@ class Bons
      * @ORM\ManyToOne(targetEntity=Types::class, inversedBy="bons")
      * @ORM\JoinColumn(nullable=false)
      * @Groups({"bons_read", "pdvs_read", "entreprises_read", "techniciens_read", "users_read"})
+     * @Assert\NotBlank(message="Le type est obligatoire !")
      */
     private $type;
 
@@ -108,6 +117,7 @@ class Bons
      * @ORM\ManyToOne(targetEntity=Categories::class, inversedBy="bons")
      * @ORM\JoinColumn(nullable=false)
      * @Groups({"bons_read", "pdvs_read", "entreprises_read", "techniciens_read", "users_read"})
+     * @Assert\NotBlank(message="La catégorie est obligatoire !")
      */
     private $categorie;
 
@@ -157,12 +167,14 @@ class Bons
     /**
      * @ORM\ManyToOne(targetEntity=Etats::class, inversedBy="bons")
      * @Groups({"bons_read", "pdvs_read", "entreprises_read", "techniciens_read", "users_read", "comptes_read"})
+     * @Assert\NotBlank(message="L'état ne peut pas être vide !")
      */
     private $etat;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
      * @Groups({"bons_read", "pdvs_read", "comptes_read"})
+     * @Assert\DateTime(message="La date de cloture doit être au format YYYY-MM-DD")
      */
     private $closedAt;
 
@@ -176,12 +188,14 @@ class Bons
      * @ORM\ManyToOne(targetEntity=Departements::class, inversedBy="bons")
      * @ORM\JoinColumn(nullable=false)
      * @Groups({"bons_read"})
+     * @Assert\NotBlank(message="Le département est obligatoire !")
      */
     private $departement;
 
     /**
      * @ORM\Column(type="string", length=100)
      * @Groups({"bons_read", "entreprises_read", "pdvs_read", "techniciens_read", "users_read", "comptes_read"})
+     * @Assert\NotBlank(message="Le numéros de bon est obligatoire !")
      */
     private $numBon;
     

@@ -12,6 +12,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=EtatsRepository::class)
@@ -36,12 +37,21 @@ class Etats
     /**
      * @ORM\Column(type="string", length=255)
      * @Groups({"etats_read", "bons_read", "techniciens_read", "users_read", "comptes_read"})
+     * @Assert\NotBlank(message="Le nom est obligatoire !")
+     * @Assert\Length(
+     *      min = 3,
+     *      max = 255,
+     *      minMessage = "Le nom doit faire entre 3 et 255 caractères !",
+     *      maxMessage = "Le nom doit faire entre 3 et 255 caractères !",
+     *      allowEmptyString = false
+     * )
      */
     private $nom;
 
     /**
      * @ORM\Column(type="boolean", nullable=true)
      * @Groups({"etats_read"})
+     * @Assert\NotBlank(message="le champs actifs doit être définit !")
      */
     private $actif;
 
