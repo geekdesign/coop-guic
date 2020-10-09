@@ -21,7 +21,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  *   },
  *   normalizationContext={
  *      "groups" = {"bons_read"}
- *      }
+ *   },
+ *   denormalizationContext={"disable_type_enforcement"=true}
  * )
  * @ApiFilter(SearchFilter::class, properties={
  *      "pdv.sap": "partial",
@@ -50,6 +51,8 @@ class Bons
     /**
      * @ORM\Column(type="datetime")
      * @Groups({"bons_read", "pdvs_read", "entreprises_read", "techniciens_read", "users_read","comptes_read"})
+     * @Assert\Type(type="\DateTimeInterface", message="La date de création doit être au format YYYY-MM-DD")
+     * @Assert\NotBlank(message="La date de création ne peut pas être vide !")
      */
     private $createdAt;
 
@@ -155,12 +158,14 @@ class Bons
     /**
      * @ORM\Column(type="integer", nullable=true)
      * @Groups({"bons_read"})
+     * @Assert\Type(type="numeric", message="Le prix HT doit être numérique !")
      */
     private $prixHt;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
      * @Groups({"bons_read"})
+     * @Assert\Type(type="numeric", message="Le prix HT doit être numérique !")
      */
     private $prixTtc;
 
@@ -174,7 +179,7 @@ class Bons
     /**
      * @ORM\Column(type="datetime", nullable=true)
      * @Groups({"bons_read", "pdvs_read", "comptes_read"})
-     * @Assert\DateTime(message="La date de cloture doit être au format YYYY-MM-DD")
+     * @Assert\Type(type="\DateTimeInterface", message="La date de clôture doit être au format YYYY-MM-DD")
      */
     private $closedAt;
 
@@ -209,7 +214,7 @@ class Bons
         return $this->createdAt;
     }
 
-    public function setCreatedAt(\DateTimeInterface $createdAt): self
+    public function setCreatedAt($createdAt): self
     {
         $this->createdAt = $createdAt;
 
@@ -425,7 +430,7 @@ class Bons
         return $this->closedAt;
     }
 
-    public function setClosedAt(?\DateTimeInterface $closedAt): self
+    public function setClosedAt($closedAt): self
     {
         $this->closedAt = $closedAt;
 
