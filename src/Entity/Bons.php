@@ -9,6 +9,7 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use App\Entity\Pdvs;
 use App\Repository\BonsRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\Id;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -468,7 +469,9 @@ class Bons
 
     public function setNumBon(string $numBon): self
     {
-        $this->numBon = $numBon;
+        $date_actuelle = date("Ym");
+        $date_actuelle = $date_actuelle ."-".$numBon;
+        $this->numBon = $date_actuelle;
 
         return $this;
     }

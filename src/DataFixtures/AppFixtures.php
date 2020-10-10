@@ -37,6 +37,8 @@ class AppFixtures extends Fixture
     {
         $faker = Factory::create('fr_CH');
 
+        $numBon = 1;
+
         $departement1 = new Departements();
         $departement1->setNom('Sécurité');
 
@@ -214,7 +216,9 @@ class AppFixtures extends Fixture
                 ->setRemarque($faker->randomElement( [$remarque ,'']))
                 ->setGarantie($faker->randomElement($array = array (false, true)))
                 ->setNumCompte($faker->randomElement($compteArray))  
-                ->setNumBon($faker->unixTime($max = 'now'));
+                ->setNumBon($numBon);
+
+                $numBon++;
                 
             $manager->persist($bon);
             
