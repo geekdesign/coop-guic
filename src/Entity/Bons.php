@@ -61,6 +61,7 @@ class Bons
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="bons")
      * @ORM\JoinColumn(nullable=false)
      * @Groups({"bons_read", "entreprises_read", "techniciens_read", "comptes_read"})
+     * @Assert\NotBlank(message="Le créateur ne peut pas être vide !")
      */
     private $createdBy;
 
@@ -171,7 +172,7 @@ class Bons
     private $prixTtc;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Etats::class, inversedBy="bons")
+     * @ORM\Column(type="string", length=255, nullable=true)
      * @Groups({"bons_read", "pdvs_read", "entreprises_read", "techniciens_read", "users_read", "comptes_read"})
      * @Assert\NotBlank(message="L'état ne peut pas être vide !")
      */
@@ -194,7 +195,6 @@ class Bons
      * @ORM\ManyToOne(targetEntity=Departements::class, inversedBy="bons")
      * @ORM\JoinColumn(nullable=false)
      * @Groups({"bons_read"})
-     * @Assert\NotBlank(message="Le département est obligatoire !")
      */
     private $departement;
 
@@ -414,12 +414,12 @@ class Bons
         return $this;
     }
 
-    public function getEtat(): ?Etats
+    public function getEtat(): ?string
     {
         return $this->etat;
     }
 
-    public function setEtat(?Etats $etat): self
+    public function setEtat(?string $etat): self
     {
         $this->etat = $etat;
 
@@ -455,7 +455,7 @@ class Bons
         return $this->departement;
     }
 
-    public function setDepartement(?Departements $departement): self
+    public function setDepartement($departement): self
     {
         $this->departement = $departement;
 

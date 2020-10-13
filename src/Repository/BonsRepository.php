@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Bons;
+use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -17,6 +18,18 @@ class BonsRepository extends ServiceEntityRepository
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Bons::class);
+    }
+
+    public function findNextNumBon(User $user){
+        return $this->createQueryBuilder("b")
+                    ->select("count(b.numBon)")
+                    ->join("b.createdBy", "u")
+                    ->where("u = :user")
+                    ->setParameter("user", $user)
+                    ->orderBy("b.numBon", "DESC")
+                    ->setMaxResults(1)
+                    ->getQuery()
+                    ->getSingleScalarResult() + 1;
     }
 
     // /**

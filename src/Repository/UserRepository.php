@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\Bons;
 use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -34,6 +35,16 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         $user->setPassword($newEncodedPassword);
         $this->_em->persist($user);
         $this->_em->flush();
+    }
+
+    public function findDepartement($user){
+        return $this->createQueryBuilder('d')
+                    ->andWhere('d.id = :val')
+                    ->setParameter('val', $user)
+                    ->orderBy('d.id', 'ASC')
+                    ->setMaxResults(1)
+                    ->getQuery()
+                    ->getResult();
     }
 
     // /**

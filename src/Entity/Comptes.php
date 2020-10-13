@@ -58,6 +58,7 @@ class Comptes
     /**
      * @ORM\Column(type="boolean", nullable=true)
      * @Groups({"comptes_read"})
+     * @Assert\NotBlank(message="Le nom est obligatoire !")
      */
     private $actif;
 
@@ -71,6 +72,7 @@ class Comptes
     /**
      * @ORM\ManyToOne(targetEntity=Departements::class, inversedBy="comptes")
      * @Groups({"comptes_read"})
+     * @Assert\NotBlank(message="Le nom est obligatoire !")
      */
     private $departement;
 

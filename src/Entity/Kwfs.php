@@ -87,6 +87,7 @@ class Kwfs
     /**
      * @ORM\ManyToOne(targetEntity=Departements::class, inversedBy="kwfs")
      * @Groups({"kwfs_read"})
+     * @Assert\NotBlank(message="le champs département doit être définit !")
      */
     private $departement;
 

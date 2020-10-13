@@ -54,12 +54,6 @@ class AppFixtures extends Fixture
 
         $manager->persist($departement3);
 
-        $etatBase = new Etats();
-        $etatBase->setNom('Envoyé')
-                 ->setActif(true);
-
-        $manager->persist($etatBase);
-
         $entrepriseArray=array();
         for ($e=0; $e < 40; $e++) { 
             $entreprise = new Entreprises();
@@ -203,7 +197,7 @@ class AppFixtures extends Fixture
             $bon = new Bons;
             $remarque = $faker->text($maxNbChars = 100); 
             $bon->setCreatedAt($faker->dateTimeBetween($startDate = '-6 month', $endDate = 'now', $timezone = null))
-                ->setDepartement($faker->randomElement([$departement1, $departement2, $departement3]))
+                ->setBonsDepartement($faker->randomElement([$departement1, $departement2, $departement3]))
                 ->setTechnicien($faker->randomElement($technicienArray))
                 ->setEntreprise($faker->randomElement($entrepriseArray))
                 ->setCreatedBy($faker->randomElement($userArray))
@@ -216,7 +210,8 @@ class AppFixtures extends Fixture
                 ->setRemarque($faker->randomElement( [$remarque ,'']))
                 ->setGarantie($faker->randomElement($array = array (false, true)))
                 ->setNumCompte($faker->randomElement($compteArray))  
-                ->setNumBon($numBon);
+                ->setNumBon($numBon)
+                ->setEtat($faker->randomElement(['ENVOYER', 'REALISER', 'FACTURER', 'PAYER', 'ANNULER' ]));
 
                 $numBon++;
                 

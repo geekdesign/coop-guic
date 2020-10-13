@@ -102,7 +102,7 @@ class User implements UserInterface
     /**
      * @ORM\ManyToOne(targetEntity=Departements::class, inversedBy="users")
      * @ORM\JoinColumn(nullable=false)
-     * @Groups({"users_read"})
+     * @Groups({"users_read", "bons_read"})
      */
     private $departement;
 

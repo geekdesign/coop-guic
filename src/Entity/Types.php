@@ -65,6 +65,7 @@ class Types
     /**
      * @ORM\ManyToOne(targetEntity=Departements::class, inversedBy="types")
      * @Groups({"types_read"})
+     * @Assert\NotBlank(message="le champs département doit être définit !")
      */
     private $departement;
 
