@@ -56,7 +56,7 @@ security:
         - { path: ^/api/entreprises, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/api/etats, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/api/kwfs, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/api/pdvs, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/api/pdvs, roles: IS_AUTHENTICATED_FULLY }
         - { path: ^/api/techniciens, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/api/types, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/api/users, roles: IS_AUTHENTICATED_FULLY, methods:[GET, PUT, DELETE],}
