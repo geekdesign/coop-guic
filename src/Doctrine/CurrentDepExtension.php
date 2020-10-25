@@ -32,11 +32,10 @@ class CurrentDepExtension  implements QueryCollectionExtensionInterface, QueryIt
     private function addWhere(QueryBuilder $queryBuilder, string $resourceClass){
 
         $user = $this->security->getUser();
-        $dep = $user->getDepartement();
-        $depId = $dep->getId();
-    
-        if($resourceClass === Bons::class || $resourceClass === Comptes::class || $resourceClass === Entreprises::class || $resourceClass === Categories::class || $resourceClass === Types::class || $resourceClass === Techniciens::class || $resourceClass === Kwfs::class || $resourceClass === User::class)
+        
+        if(($resourceClass === Bons::class || $resourceClass === Comptes::class || $resourceClass === Entreprises::class || $resourceClass === Categories::class || $resourceClass === Types::class || $resourceClass === Techniciens::class || $resourceClass === Kwfs::class || $resourceClass === User::class) && $user instanceof User )
         {
+            $dep = $user->getDepartement();
             $rootAlias = $queryBuilder->getRootAliases()[0];
             $queryBuilder->andWhere("$rootAlias.departement = :depId");
             $queryBuilder->setParameter("depId", $dep);

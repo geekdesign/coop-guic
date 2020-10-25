@@ -46,19 +46,19 @@ security:
             # switch_user: true
 
     # Easy way to control access for large sections of your site
-    # Note: Only the *first* access control that matches will be used
+    # Note: Only the *first* access control that matches will be used IS_AUTHENTICATED_FULLY
     access_control:
         - { path: ^/api/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/api/bons, roles: IS_AUTHENTICATED_FULLY }
-        - { path: ^/api/categories, roles: IS_AUTHENTICATED_FULLY }
-        - { path: ^/api/comptes, roles: IS_AUTHENTICATED_FULLY }
-        - { path: ^/api/departements, roles: IS_AUTHENTICATED_FULLY }
-        - { path: ^/api/entreprises, roles: IS_AUTHENTICATED_FULLY }
-        - { path: ^/api/etats, roles: IS_AUTHENTICATED_FULLY }
-        - { path: ^/api/kwfs, roles: IS_AUTHENTICATED_FULLY }
-        - { path: ^/api/pdvs, roles: IS_AUTHENTICATED_FULLY }
-        - { path: ^/api/techniciens, roles: IS_AUTHENTICATED_FULLY }
-        - { path: ^/api/types, roles: IS_AUTHENTICATED_FULLY }
+        - { path: ^/api/bons, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/api/categories, roles: IS_AUTHENTICATED_ANONYMOUSLY}
+        - { path: ^/api/comptes, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/api/departements, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/api/entreprises, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/api/etats, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/api/kwfs, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/api/pdvs, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/api/techniciens, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/api/types, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/api/users, roles: IS_AUTHENTICATED_FULLY, methods:[GET, PUT, DELETE],}
         # - { path: ^/admin, roles: ROLE_ADMIN }
         # - { path: ^/profile, roles: ROLE_USER }
