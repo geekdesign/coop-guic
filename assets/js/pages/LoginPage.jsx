@@ -2,6 +2,7 @@ import React, { useState, useContext } from 'react';
 import { Form } from 'react-bootstrap';
 import AuthAPI from '../services/authAPI';
 import AuthContext from '../contexts/AuthContext';
+import Field from '../components/forms/Field';
 
 const LoginPage = ({history }) => {
 
@@ -41,28 +42,25 @@ const LoginPage = ({history }) => {
             <h2>Page de connexion</h2>
             <br/>
             <Form onSubmit={handleSubmit} >
-                <div className="form-group">
-                    <label htmlFor="username">Nom d'utilisateur</label>
-                    <input 
-                        value={credentials.username}
-                        onChange={handleChange}
-                        type="text" 
-                        placeholder="Saisissez votre nom d'utilisateur" 
-                        id="username" 
-                        name="username" 
-                        className={"form-control" + (error && " is-invalid") }/>
-                        { error && <p className="invalid-feedback">{error}</p>}
-                    </div>
-                <div className="form-group">
-                    <label htmlFor="password">Mot de passe</label>
-                    <input 
-                        value={credentials.password} 
-                        onChange={handleChange}
-                        type="password" 
-                        placeholder="Saisissez votre mot de passe" 
-                        id="password" 
-                        name="password" className="form-control"/>
-                </div>
+                <Field 
+                    label="Nom d'utilisateur"
+                    name="username"
+                    value={credentials.username}
+                    onChange={handleChange}
+                    placeholder="Saisissez votre nom d'utilisateur"
+                    error={error}
+                />
+
+                <Field 
+                    label="Mot de passe"
+                    name="password"
+                    value={credentials.password} 
+                    onChange={handleChange}
+                    type="password" 
+                    placeholder="Saisissez votre mot de passe" 
+                    error={error}
+                />
+
                 <div className="form-group"><button type="submit" className="btn btn-primary">Se connecter</button></div>
             </Form>
 

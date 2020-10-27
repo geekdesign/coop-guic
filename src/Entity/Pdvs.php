@@ -19,7 +19,10 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ApiResource(
  *   normalizationContext={
  *      "groups" = {"pdvs_read"}
- * }
+ *   },
+ *   denormalizationContext={
+ *        "disable_type_enforcement"=true
+ *   }
  * )
  * @ApiFilter(SearchFilter::class)
  * @ApiFilter(OrderFilter::class)
@@ -37,6 +40,14 @@ class Pdvs
     /**
      * @ORM\Column(type="integer")
      * @Groups({"pdvs_read", "bons_read"})
+     * @Assert\NotBlank(message="Le sap est obligatoire !")
+     * @Assert\Length(
+     *      min = 2,
+     *      max = 6,
+     *      minMessage = "Le sap doit contenir 2 chiffres au minimum",
+     *      maxMessage = "Le sap doit contenir 6 chiffres au maximum",
+     *      allowEmptyString = false
+     * )
      */
     private $sap;
 
@@ -65,9 +76,9 @@ class Pdvs
      * @Groups({"pdvs_read", "bons_read"})
      * @Assert\Length(
      *      min = 4,
-     *      max = 4,
+     *      max = 6,
      *      minMessage = "Le code postal doit contenir 4 chiffres au minimum",
-     *      maxMessage = "Le code postal doit contenir 4 chiffres au maximum",
+     *      maxMessage = "Le code postal doit contenir 6 chiffres au maximum",
      *      allowEmptyString = false
      * )
      */
@@ -141,10 +152,9 @@ class Pdvs
         return $this->sap;
     }
 
-    public function setSap(int $sap): self
+    public function setSap($sap): self
     {
         $this->sap = $sap;
-
         return $this;
     }
 
@@ -177,7 +187,7 @@ class Pdvs
         return $this->npa;
     }
 
-    public function setNpa(?int $npa): self
+    public function setNpa($npa): self
     {
         $this->npa = $npa;
 

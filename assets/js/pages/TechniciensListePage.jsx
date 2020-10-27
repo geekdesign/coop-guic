@@ -2,20 +2,19 @@ import React, { useEffect, useState } from 'react';
 import { Button, Table } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import Pagination from '../components/Pagination';
-import PdvsAPI from '../services/pdvsAPI';
+import TechniciensAPI from '../services/techniciensAPI';
 
-
-const PdvListePage = (props) => {
-
-    const [pdvs, setPdvs] = useState([]);
+const TechniciensListePage = (props) => {
+    
+    const [techniciens, setTechniciens] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [search, setSearch] = useState("");
 
     // Fonction asynchrone qui récupère la liste des magasins 
-    const fetchPdvs = async () => {
+    const fetchTechniciens = async () => {
         try {
-            const data = await PdvsAPI.findAll();
-            setPdvs(data);
+            const data = await TechniciensAPI.findAll();
+            setTechniciens(data);
         }catch (error) {
             console.log(error.response);
         }
@@ -23,20 +22,20 @@ const PdvListePage = (props) => {
 
     //Au chargement je charge la liste des magasins
     useEffect(() => {
-        fetchPdvs()
+        fetchTechniciens();
     }, []);
 
     // Fonction qui permet de supprimer un pdv
     const handleDelete = async id => {
         //On créer une copie de la liste au cas ou la suppression ne focntionnerait pas
-        const originalPdvs = [...pdvs];
+        const originalTechniciens = [...techniciens];
         //On efface de la liste l'objet à effacer
-        setPdvs(pdvs.filter(pdv => pdv.id !== id))
+        setTechniciens(techniciens.filter(technicien => technicien.id !== id))
         //On essaye de faire une requête serveur pour la suppression de l'élément dans la liste si sa ne marche pas on renvoi une erreure
         try {
-            await PdvsAPI.delete(id)
+            await TechniciensAPI.delete(id)
         }catch(error) {
-            setPdvs(originalPdvs);
+            setTechniciens(originalTechniciens);
             console.log(error.response);
         }
     };
@@ -53,17 +52,15 @@ const PdvListePage = (props) => {
     const itemsPerPage = 10;
 
     //Filtrage des magasin en fonction de la recherche
-    const filteredPdvs = pdvs.filter( 
-        p => 
-            p.nom.toLowerCase().includes(search.toLowerCase()) ||
-            p.rue.toLowerCase().includes(search.toLowerCase()) ||
-            p.lieu.toLowerCase().includes(search.toLowerCase()) ||
-            p.sap.toString().includes(search.toLowerCase())
+    const filteredTechniciens = techniciens.filter( 
+        t => 
+            t.nom.toLowerCase().includes(search.toLowerCase()) ||
+            t.prenom.toLowerCase().includes(search.toLowerCase())
     ); 
 
     //Pagination des données
-    const paginatedPdvs = Pagination.getData(
-        filteredPdvs,
+    const paginatedTechniciens = Pagination.getData(
+        filteredTechniciens,
         currentPage, 
         itemsPerPage
     );
@@ -71,14 +68,14 @@ const PdvListePage = (props) => {
     return ( 
         <>
         <div className="mb-3 d-flex justify-content-between align-items-center">
-            <h2>Liste des points de vente</h2>
-            <Link to="/pdv/new" className="btn btn-primary" >Créer un nouveau point de vente</Link>
+            <h2>Liste des techniciens</h2>
+            <Link to="/technicien/new" className="btn btn-primary" >Ajouter un technicien</Link>
         </div>
 
         <div className=" mb-4 form-group">
             <input 
                 type="text"
-                placeholder="Rechercher par SAP, Nom, Rue ou Lieu..."
+                placeholder="Rechercher par Nom ou prénom.."
                 className="form-control"
                 onChange={handleSearch}
                 value={search}
@@ -87,32 +84,24 @@ const PdvListePage = (props) => {
         <Table className="table-hover">
             <thead>
                 <tr>
-                    <th className="text-center">SAP</th>
                     <th>Nom</th>
-                    <th>Rue</th>
-                    <th className="text-center">NPA</th>
-                    <th>Lieu</th>
+                    <th>Prénom</th>
                     <th>Téléphone</th>
-                    <th>Fax</th>
                     <th>Email</th>
                     <th/>
                 </tr>
             </thead>
             <tbody>
-                {paginatedPdvs.map(pdv =>
-                <tr key={pdv.id}>
-                    <td className="text-center">{pdv.sap}</td>
-                    <td>{pdv.nom}</td>
-                    <td>{pdv.rue}</td>
-                    <td className="text-center">{pdv.npa}</td>
-                    <td>{pdv.lieu}</td>
-                    <td>{pdv.telephone}</td>
-                    <td>{pdv.fax}</td>
-                    <td>{pdv.email}</td>
+                {paginatedTechniciens.map(technicien =>
+                <tr key={technicien.id}>
+                    <td>{technicien.nom}</td>
+                    <td>{technicien.prenom}</td>
+                    <td>{technicien.telephone}</td>
+                    <td>{technicien.email}</td>
                     <td>
                         <Button className="mr-2" variant="primary" size="sm">Voir</Button>
-                        <Link className="btn btn-success btn-sm mr-2"to={"/pdv/" + pdv.id} >Modifier</Link>
-                        <Button onClick={() => handleDelete(pdv.id)} disabled={pdv.bons.length > 0} variant="danger" size="sm">Supprimer</Button>
+                        <Link className="btn btn-success btn-sm mr-2"to={"/technicien/" + technicien.id} >Modifier</Link>
+                        <Button onClick={() => handleDelete(technicien.id)} disabled={technicien.bons.length > 0} variant="danger" size="sm">Supprimer</Button>
                     </td>
                 </tr>
                     )}
@@ -120,11 +109,11 @@ const PdvListePage = (props) => {
             </tbody>
         </Table>
             
-            {itemsPerPage < filteredPdvs.length && ( 
+            {itemsPerPage < filteredTechniciens.length && ( 
                 <Pagination 
                     currentPage={currentPage} 
                     itemsPerPage={itemsPerPage} 
-                    length={filteredPdvs.length} 
+                    length={filteredTechniciens.length} 
                     onPageChanged={handleChangePage}
                 />
             )}
@@ -132,4 +121,4 @@ const PdvListePage = (props) => {
      );
 }
  
-export default PdvListePage;
+export default TechniciensListePage;

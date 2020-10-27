@@ -3,6 +3,7 @@ import { Button, Table } from 'react-bootstrap';
 import Pagination from '../components/Pagination';
 import BonsAPI from '../services/bonsAPI';
 import dayjs from 'dayjs';
+import { Link } from 'react-router-dom';
 
 
 const BonsListePage = () => {
@@ -93,7 +94,10 @@ const BonsListePage = () => {
 
     return ( 
         <>
-            <h2>Liste des bons</h2>
+            <div className="mb-3 d-flex justify-content-between align-items-center">
+                <h2>Liste des bons</h2>
+                <Link to="/bons/new" className="btn btn-primary" >Créer un nouveau bon</Link>
+            </div>
             <br/>
             <div className="form-group">
                 <input 

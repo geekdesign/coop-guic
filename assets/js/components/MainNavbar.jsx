@@ -1,30 +1,13 @@
-import React, { useState, useContext } from 'react';
-import { Nav, Image, Navbar, NavDropdown, Button} from 'react-bootstrap';
-import { FaBeer, FaPlus, FaListUl } from 'react-icons/fa';
-import { NavLink } from 'react-router-dom';
+import React, { useContext } from 'react';
+import { Nav, Navbar, NavDropdown, Button} from 'react-bootstrap';
+import { FaPlus, FaListUl } from 'react-icons/fa';
 import AuthApi from '../services/authAPI';
 import AuthContext from '../contexts/AuthContext';
+import Dropdown from '../components/Dropdown';
 
 const MainNavbar = ({history}) => {
 
-    const [showBons, setShowBons] = useState(false);
-    const [showPdv, setShowPdv] = useState(false);
     const {isAuthenticated, setIsAuthenticated} = useContext(AuthContext);
-
-        // Lors du hover sur le menu le dropdown sort automatiquement  
-        const showDropdownBons = (e)=>{
-            setShowBons(!showBons);
-        }
-        const hideDropdownBons = e => {
-            setShowBons(false);
-        }
-        // Lors du hover sur le menu PDV le dropdown descend automatiquement
-        const showDropdownPdv = (e)=>{
-            setShowPdv(!showPdv);
-        }
-        const hideDropdownPdv = e => {
-            setShowPdv(false);
-        }
 
     // Fonction de logout avec redirection vers la page de connexion
     const handleLogout = () => {
@@ -48,28 +31,36 @@ const MainNavbar = ({history}) => {
                 <>
                     <Nav className="mr-auto ml-2">
                         <Nav.Link href="#home">Tableau de bord</Nav.Link>
-                        <NavDropdown 
-                            title="Bons"
-                            id="basic-nav-dropdown"        
-                            show={showBons}
-                            onMouseEnter={showDropdownBons} 
-                            onMouseLeave={hideDropdownBons}
-                        >
-                            <NavDropdown.Item href="#action/3.4"><FaPlus className="mr-2" />Nouveau bon</NavDropdown.Item>
+                        <Dropdown titre="Bons" >
+                            <NavDropdown.Item href="/#/bons/new"><FaPlus className="mr-2" />Nouveau bon</NavDropdown.Item>
                             <NavDropdown.Divider />
                             <NavDropdown.Item href="/#/bons"><FaListUl className="mr-2" />Liste des bons</NavDropdown.Item>
-                        </NavDropdown>
-                        <NavDropdown 
-                            title="PDV"
-                            id="basic-nav-dropdown"        
-                            show={showPdv}
-                            onMouseEnter={showDropdownPdv} 
-                            onMouseLeave={hideDropdownPdv}
-                        >
-                            <NavDropdown.Item href="#action/3.2"><FaPlus className="mr-2" />Ajouter un PDV</NavDropdown.Item>
+                        </Dropdown>
+                        <Dropdown titre="PdV" >
+                            <NavDropdown.Item href="/#/pdv/new"><FaPlus className="mr-2" />Ajouter un PDV</NavDropdown.Item>
                             <NavDropdown.Divider />
                             <NavDropdown.Item href="/#/pdv"><FaListUl className="mr-2" />Liste des PDV</NavDropdown.Item>
-                        </NavDropdown>
+                        </Dropdown>
+                        <Dropdown titre="Entreprises" >
+                            <NavDropdown.Item href="/#/pdv/new"><FaPlus className="mr-2" />Ajouter une entreprise</NavDropdown.Item>
+                            <NavDropdown.Divider />
+                            <NavDropdown.Item href="/#/pdv"><FaListUl className="mr-2" />Liste des entreprises</NavDropdown.Item>
+                        </Dropdown>
+                        <Dropdown titre="Techniciens" >
+                            <NavDropdown.Item href="/#/pdv/new"><FaPlus className="mr-2" />Ajouter un technicien</NavDropdown.Item>
+                            <NavDropdown.Divider />
+                            <NavDropdown.Item href="/#/techniciens"><FaListUl className="mr-2" />Liste des techniciens</NavDropdown.Item>
+                        </Dropdown>
+                        <Dropdown titre="Paramètres" >
+                            <NavDropdown.Item href="/#/pdv/new">Gestion des comptes</NavDropdown.Item>
+                            <NavDropdown.Divider />
+                            <NavDropdown.Item href="/#/pdv/new">Gestion des KWF</NavDropdown.Item>
+                            <NavDropdown.Divider />
+                            <NavDropdown.Item href="/#/pdv/new">Gestion des utilisateurs</NavDropdown.Item>
+                            <NavDropdown.Divider />
+                            <NavDropdown.Item href="/#/pdv/new">Gestion des catégories</NavDropdown.Item>
+                            <NavDropdown.Item href="/#/pdv">Gestion des types</NavDropdown.Item>
+                        </Dropdown>
                     </Nav>
                     <Nav className="justify-content-end">
                         <Button className="btn-warning" onClick={handleLogout} >Déconnexion</Button>

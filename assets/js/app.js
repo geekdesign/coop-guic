@@ -11,6 +11,9 @@ import LoginPage from './pages/LoginPage';
 import AuthAPI from './services/authAPI';
 import AuthContext from './contexts/AuthContext';
 import PrivateRoute from './components/PrivateRoute';
+import PdvPage from './pages/PdvPage';
+import BonPage from './pages/BonPage';
+import TechniciensListePage from './pages/TechniciensListePage';
 
 AuthAPI.setup();
 
@@ -31,7 +34,10 @@ const App = () => {
                 <Row >
                     <Col xs={12} md={12} p={5} className="p-4" >
                         <Switch>
+                            <PrivateRoute path="/bons/:id" component={BonPage} />
+                            <PrivateRoute path="/techniciens" component={TechniciensListePage} />
                             <PrivateRoute path="/bons" component={BonsListePage} />
+                            <PrivateRoute path="/pdv/:id" component={PdvPage} />
                             <PrivateRoute path="/pdv" component={PdvListePage} />
                             <PrivateRoute path="/home" component={HomePage} />
                             <Route path="/" render={(props) => <LoginPage {...props} />} />
