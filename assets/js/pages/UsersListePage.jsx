@@ -2,40 +2,51 @@ import React, { useEffect, useState } from 'react';
 import { Button, Table } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import Pagination from '../components/Pagination';
-import TechniciensAPI from '../services/techniciensAPI';
+import UsersAPI from '../services/usersAPI';
 
-const TechniciensListePage = (props) => {
-    
-    const [techniciens, setTechniciens] = useState([]);
+
+const UserListePage = (props) => {
+
+    const [users, setUsers] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [search, setSearch] = useState("");
 
     // Fonction asynchrone qui récupère la liste des magasins 
-    const fetchTechniciens = async () => {
+    const fetchUsers = async () => {
         try {
-            const data = await TechniciensAPI.findAll();
-            setTechniciens(data);
+            const data = await UsersAPI.findAll();
+            setUsers(data);
         }catch (error) {
             console.log(error.response);
         }
     }
 
+    const USER_CLASSES = {
+        ROLE_USER: "primary",
+        ROLE_ADMIN: "dark"
+    }
+    
+    const USER_LABEL = {
+        ROLE_USER: "Utilisateur",
+        ROLE_ADMIN: "Administrateur"
+    }
+
     //Au chargement je charge la liste des magasins
     useEffect(() => {
-        fetchTechniciens();
+        fetchUsers()
     }, []);
 
     // Fonction qui permet de supprimer un pdv
     const handleDelete = async id => {
         //On créer une copie de la liste au cas ou la suppression ne focntionnerait pas
-        const originalTechniciens = [...techniciens];
+        const originalUsers = [...users];
         //On efface de la liste l'objet à effacer
-        setTechniciens(techniciens.filter(technicien => technicien.id !== id))
+        setUsers(users.filter(user => user.id !== id))
         //On essaye de faire une requête serveur pour la suppression de l'élément dans la liste si sa ne marche pas on renvoi une erreure
         try {
-            await TechniciensAPI.delete(id)
+            await UsersAPI.delete(id)
         }catch(error) {
-            setTechniciens(originalTechniciens);
+            setUsers(originalUsers);
             console.log(error.response);
         }
     };
@@ -52,15 +63,16 @@ const TechniciensListePage = (props) => {
     const itemsPerPage = 10;
 
     //Filtrage des magasin en fonction de la recherche
-    const filteredTechniciens = techniciens.filter( 
-        t => 
-            t.nom.toLowerCase().includes(search.toLowerCase()) ||
-            t.prenom.toLowerCase().includes(search.toLowerCase())
+    const filteredUsers = users.filter( 
+        u => 
+            u.nom.toLowerCase().includes(search.toLowerCase()) ||
+            u.prenom.toLowerCase().includes(search.toLowerCase()) ||
+            u.username.toLowerCase().includes(search.toLowerCase())
     ); 
 
     //Pagination des données
-    const paginatedTechniciens = Pagination.getData(
-        filteredTechniciens,
+    const paginatedUsers = Pagination.getData(
+        filteredUsers,
         currentPage, 
         itemsPerPage
     );
@@ -68,14 +80,14 @@ const TechniciensListePage = (props) => {
     return ( 
         <>
         <div className="mb-3 d-flex justify-content-between align-items-center">
-            <h2>Liste des techniciens</h2>
-            <Link to="/techniciens/new" className="btn btn-primary" >Ajouter un technicien</Link>
+            <h2>Liste des utilisateurs</h2>
+            <Link to="/users/new" className="btn btn-primary" >Créer un nouvel utilisateur</Link>
         </div>
 
         <div className=" mb-4 form-group">
             <input 
                 type="text"
-                placeholder="Rechercher par Nom ou prénom.."
+                placeholder="Rechercher par Nom ou prénom..."
                 className="form-control"
                 onChange={handleSearch}
                 value={search}
@@ -86,24 +98,24 @@ const TechniciensListePage = (props) => {
                 <tr>
                     <th>Nom</th>
                     <th>Prénom</th>
-                    <th>Téléphone</th>
+                    <th>Username</th>
                     <th>Email</th>
-                    <th className="text-center">Nbrs de bons</th>
+                    <th className="text-center">Rôles</th>
                     <th/>
                 </tr>
             </thead>
             <tbody>
-                {paginatedTechniciens.map(technicien =>
-                <tr key={technicien.id}>
-                    <td>{technicien.nom}</td>
-                    <td>{technicien.prenom}</td>
-                    <td>{technicien.telephone}</td>
-                    <td>{technicien.mail}</td>
-                    <td className="text-center">{technicien.bons.length}</td>
+                {paginatedUsers.map(user =>
+                <tr key={user.id}>
+                    <td>{user.nom}</td>
+                    <td>{user.prenom}</td>
+                    <td>{user.username}</td>
+                    <td>{user.mail}</td>
+                    <td className="text-center"><span className={"badge badge-" + USER_CLASSES[user.roles]}>{USER_LABEL[user.roles]}</span></td>
                     <td>
                         <Button className="mr-2" variant="primary" size="sm">Voir</Button>
-                        <Link className="btn btn-success btn-sm mr-2"to={"/techniciens/" + technicien.id} >Modifier</Link>
-                        <Button onClick={() => handleDelete(technicien.id)} disabled={technicien.bons.length > 0} variant="danger" size="sm">Supprimer</Button>
+                        <Link className="btn btn-success btn-sm mr-2"to={"/user/" + user.id} >Modifier</Link>
+                        <Button onClick={() => handleDelete(user.id)} disabled={user.bons.length > 0} variant="danger" size="sm">Supprimer</Button>
                     </td>
                 </tr>
                     )}
@@ -111,11 +123,11 @@ const TechniciensListePage = (props) => {
             </tbody>
         </Table>
             
-            {itemsPerPage < filteredTechniciens.length && ( 
+            {itemsPerPage < filteredUsers.length && ( 
                 <Pagination 
                     currentPage={currentPage} 
                     itemsPerPage={itemsPerPage} 
-                    length={filteredTechniciens.length} 
+                    length={filteredUsers.length} 
                     onPageChanged={handleChangePage}
                 />
             )}
@@ -123,4 +135,4 @@ const TechniciensListePage = (props) => {
      );
 }
  
-export default TechniciensListePage;
+export default UserListePage;

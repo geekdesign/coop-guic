@@ -196,103 +196,95 @@ const BonPage = ({ history }) => {
         <br/>
         <form onSubmit={handleSubmit} className="row">
             <div className="col-md-6">
+                <Select name="pdv" label="Point de vente" placeholder="Selectionner un PdV" value={bon.pdv} onChange={handleChange} error={errors.pdv} >
+                    {pdvs.map(pdv => (
+                        <option key={pdv.id} value={pdv.id}>
+                            {pdv.sap} - {pdv.nom}
+                        </option>
+                    ))}
+                </Select>
+
+                <Select name="entreprise" label="Entreprise" placeholder="Selectionner une entreprise" value={bon.entreprise} onChange={handleChange} error={errors.entreprise} >
+                    {entreprises.map(entreprise => (
+                        <option key={entreprise.id} value={entreprise.id}>
+                            {entreprise.nom}
+                        </option>
+                    ))}
+                </Select>
+
+                <Select name="technicien" label="Technicien" placeholder="Selectionner un technicien" value={bon.technicien} onChange={handleChange} error={errors.technicien} >
+                    {techniciens.map(technicien => (
+                        <option key={technicien.id} value={technicien.id}>
+                            {technicien.nom} {technicien.prenom}
+                        </option>
+                    ))}
+                </Select>
+
+                <Select name="kwf" label="KWF" placeholder="Selectionner un KWF" value={bon.kwf} error={errors.kwf} onChange={handleChange} >
+                    {kwfs.map(kwf => (
+                        <option key={kwf.id} value={kwf.id}>
+                            {kwf.nom} {kwf.prenom}
+                        </option>
+                    ))}
+                </Select>
+
+                <Select name="numCompte" label="Numéro de compte" placeholder="Selectionner un compte" value={bon.numCompt} error={errors.numCompte} onChange={handleChange} >
+                    {comptes.map(compte => (
+                        <option key={compte.id} value={compte.id}>
+                            {compte.num} - {compte.nom}
+                        </option>
+                    ))}
+                </Select>
+
+                <Field name="numCredit" label="Numéro de crédit" onChange={handleChange} value={bon.numCredit} error={errors.numCredit}/>
+                            
+                <Select name="categorie" label="Catégorie" placeholder="Selectionner une catégorie" value={bon.categorie} error={errors.categorie} onChange={handleChange} >
+                        {categories.map(categorie => (
+                            <option key={categorie.id} value={categorie.id}>
+                                {categorie.nom}
+                            </option>
+                        ))}
+                </Select>
+
+                <Select name="type" label="Type" placeholder="Selectionner un type" value={bon.type} error={errors.type} onChange={handleChange} >
+                            {types.map(type => (
+                                <option key={type.id} value={type.id}>
+                                    {type.nom}
+                                </option>
+                            ))}
+                </Select>
+
                 <div className="form-group">
-                    <div className="row">
-                        <div className="col-md-6">
-                            <Select name="pdv" label="Point de vente" placeholder="Selectionner un PdV" value={bon.pdv} onChange={handleChange} error={errors.pdv} >
-                                {pdvs.map(pdv => (
-                                    <option key={pdv.id} value={pdv.id}>
-                                        {pdv.sap} - {pdv.nom}
-                                    </option>
-                                ))}
-                            </Select>
-                        </div>
-                        <div className="col-md-6">
-                            <Select name="entreprise" label="Entreprise" placeholder="Selectionner une entreprise" value={bon.entreprise} onChange={handleChange} error={errors.entreprise} >
-                                {entreprises.map(entreprise => (
-                                    <option key={entreprise.id} value={entreprise.id}>
-                                        {entreprise.nom}
-                                    </option>
-                                ))}
-                            </Select>
-                        </div>
-                    </div>
-                    <div className="row">
-                        <div className="col-md-6">
-                            <Select name="technicien" label="Technicien" placeholder="Selectionner un technicien" value={bon.technicien} onChange={handleChange} error={errors.technicien} >
-                                {techniciens.map(technicien => (
-                                    <option key={technicien.id} value={technicien.id}>
-                                        {technicien.nom} {technicien.prenom}
-                                    </option>
-                                ))}
-                            </Select>
-                        </div>
-                        <div className="col-md-6">
-                            <Select name="kwf" label="KWF" placeholder="Selectionner un KWF" value={bon.kwf} error={errors.kwf} onChange={handleChange} >
-                                {kwfs.map(kwf => (
-                                    <option key={kwf.id} value={kwf.id}>
-                                        {kwf.nom} {kwf.prenom}
-                                    </option>
-                                ))}
-                            </Select>
-                        </div>
-                    </div>
-                    <div className="row">
-                        <div className="col-md-6">
-                            <Select name="numCompte" label="Numéro de compte" placeholder="Selectionner un compte" value={bon.numCompt} error={errors.numCompte} onChange={handleChange} >
-                                {comptes.map(compte => (
-                                    <option key={compte.id} value={compte.id}>
-                                        {compte.num} - {compte.nom}
-                                    </option>
-                                ))}
-                            </Select>
-                        </div>
-                        <div className="col-md-6">
-                            <Field name="numCredit" label="Numéro de crédit" onChange={handleChange} value={bon.numCredit} error={errors.numCredit}/>
-                        </div>
-                    </div>
-                    <div className="row">
-                        <div className="col-md-6">
-                            <Select name="categorie" label="Catégorie" placeholder="Selectionner une catégorie" value={bon.categorie} error={errors.categorie} onChange={handleChange} >
-                                    {categories.map(categorie => (
-                                        <option key={categorie.id} value={categorie.id}>
-                                            {categorie.nom}
-                                        </option>
-                                    ))}
-                            </Select>
-                        </div>
-                        <div className="col-md-6">
-                            <Select name="type" label="Type" placeholder="Selectionner un type" value={bon.type} error={errors.type} onChange={handleChange} >
-                                        {types.map(type => (
-                                            <option key={type.id} value={type.id}>
-                                                {type.nom}
-                                            </option>
-                                        ))}
-                            </Select>
-                        </div>
-                    </div>
-                    <div className="form-group">
-                        <div className="form-check">
-                            <br/>
-                            <input className="form-check-input" type="checkbox" name="garantie" onChange={handleChange} value={bon.garantie} error={errors.garantie}/>
-                            <label className="form-check-label" >
-                                Travaux de garantie
-                            </label>
-                        </div>
+                    <div className="form-check">
+                        <br/>
+                        <input className="form-check-input" type="checkbox" name="garantie" onChange={handleChange} value={bon.garantie} error={errors.garantie}/>
+                        <label className="form-check-label" >
+                            Travaux de garantie
+                        </label>
                     </div>
                 </div>
+
             </div>
-            <div className="col-md-6">
-                <Field name="sujet" label="Sujet" placeholder="Sujet du bon" onChange={handleChange} value={bon.sujet} error={errors.sujet}/>
-                <label>Description</label>
-                <textarea className="form-control" name="description" rows="9" onChange={handleChange} value={bon.description} error={errors.description}></textarea>
-                <br/>
-                <label>Remarque</label>
-                <textarea className="form-control" name="remarque" placeholder={bon.remarque} rows="5" onChange={handleChange} value={bon.remarque} error={errors.remarque}></textarea>
-                <br/>
-                <button type="submit" className="mr-2 btn btn-primary">Enregistrer</button>
-                <Link to="/bons" className="btn  btn-light">Retour à la liste</Link>
-            </div>
+                <div className="col-md-6">
+                    
+                    <Field name="sujet" label="Sujet" placeholder="Sujet du bon" onChange={handleChange} value={bon.sujet} error={errors.sujet}/>
+
+                    <label>Description</label>
+                    <textarea className="form-control" name="description" rows="13" onChange={handleChange} value={bon.description} error={errors.description}></textarea>
+
+                    <br/>
+
+                    <label>Remarque</label>
+                    <textarea className="form-control" name="remarque" placeholder={bon.remarque} rows="8" onChange={handleChange} value={bon.remarque} error={errors.remarque}></textarea>
+
+                    <br/>
+                    <div className="d-flex justify-content-between">
+                        <Link to="/bons" className="btn  btn-light">Retour à la liste</Link>
+                        <button type="submit" className="mr-2 btn btn-primary">Enregistrer</button>
+                    </div>
+
+                </div>                    
+
         </form>
      </> );
 }

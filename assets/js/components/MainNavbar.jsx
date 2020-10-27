@@ -56,7 +56,7 @@ const MainNavbar = ({history}) => {
                             <NavDropdown.Divider />
                             <NavDropdown.Item href="/#/kwfs">Gestion des KWF</NavDropdown.Item>
                             <NavDropdown.Divider />
-                            <NavDropdown.Item href="/#/pdv/new">Gestion des utilisateurs</NavDropdown.Item>
+                            <NavDropdown.Item href="/#/users">Gestion des utilisateurs</NavDropdown.Item>
                             <NavDropdown.Divider />
                             <NavDropdown.Item href="/#/categories">Gestion des catégories</NavDropdown.Item>
                             <NavDropdown.Item href="/#/types">Gestion des types</NavDropdown.Item>
