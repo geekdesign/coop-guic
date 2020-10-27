@@ -19,7 +19,10 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ApiResource(
  *   normalizationContext={
  *      "groups" = {"comptes_read"}
- * }
+ * },
+ *   denormalizationContext={
+ *        "disable_type_enforcement"=true
+ *   }
  * )
  * @ApiFilter(SearchFilter::class)
  * @ApiFilter(OrderFilter::class)
@@ -91,7 +94,7 @@ class Comptes
         return $this->num;
     }
 
-    public function setNum(int $num): self
+    public function setNum($num): self
     {
         $this->num = $num;
 

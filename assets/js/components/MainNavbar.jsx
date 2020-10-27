@@ -42,24 +42,24 @@ const MainNavbar = ({history}) => {
                             <NavDropdown.Item href="/#/pdv"><FaListUl className="mr-2" />Liste des PDV</NavDropdown.Item>
                         </Dropdown>
                         <Dropdown titre="Entreprises" >
-                            <NavDropdown.Item href="/#/pdv/new"><FaPlus className="mr-2" />Ajouter une entreprise</NavDropdown.Item>
+                            <NavDropdown.Item href="/#/entreprises/new"><FaPlus className="mr-2" />Ajouter une entreprise</NavDropdown.Item>
                             <NavDropdown.Divider />
-                            <NavDropdown.Item href="/#/pdv"><FaListUl className="mr-2" />Liste des entreprises</NavDropdown.Item>
+                            <NavDropdown.Item href="/#/entreprises"><FaListUl className="mr-2" />Liste des entreprises</NavDropdown.Item>
                         </Dropdown>
                         <Dropdown titre="Techniciens" >
-                            <NavDropdown.Item href="/#/pdv/new"><FaPlus className="mr-2" />Ajouter un technicien</NavDropdown.Item>
+                            <NavDropdown.Item href="/#/techniciens/new"><FaPlus className="mr-2" />Ajouter un technicien</NavDropdown.Item>
                             <NavDropdown.Divider />
                             <NavDropdown.Item href="/#/techniciens"><FaListUl className="mr-2" />Liste des techniciens</NavDropdown.Item>
                         </Dropdown>
                         <Dropdown titre="Paramètres" >
-                            <NavDropdown.Item href="/#/pdv/new">Gestion des comptes</NavDropdown.Item>
+                            <NavDropdown.Item href="/#/comptes">Gestion des comptes</NavDropdown.Item>
                             <NavDropdown.Divider />
-                            <NavDropdown.Item href="/#/pdv/new">Gestion des KWF</NavDropdown.Item>
+                            <NavDropdown.Item href="/#/kwfs">Gestion des KWF</NavDropdown.Item>
                             <NavDropdown.Divider />
                             <NavDropdown.Item href="/#/pdv/new">Gestion des utilisateurs</NavDropdown.Item>
                             <NavDropdown.Divider />
-                            <NavDropdown.Item href="/#/pdv/new">Gestion des catégories</NavDropdown.Item>
-                            <NavDropdown.Item href="/#/pdv">Gestion des types</NavDropdown.Item>
+                            <NavDropdown.Item href="/#/categories">Gestion des catégories</NavDropdown.Item>
+                            <NavDropdown.Item href="/#/types">Gestion des types</NavDropdown.Item>
                         </Dropdown>
                     </Nav>
                     <Nav className="justify-content-end">

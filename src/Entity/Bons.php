@@ -201,7 +201,6 @@ class Bons
     /**
      * @ORM\Column(type="string", length=100)
      * @Groups({"bons_read", "entreprises_read", "pdvs_read", "techniciens_read", "users_read", "comptes_read"})
-     * @Assert\NotBlank(message="Le numéros de bon est obligatoire !")
      */
     private $numBon;
     

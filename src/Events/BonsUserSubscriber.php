@@ -42,7 +42,6 @@ class BonsUserSubscriber implements EventSubscriberInterface{
             $bons->setCreatedBy($user);
             $bons->setDepartement($depId);
             $bons->setNumBon($dep.$nextNum);
-            dd($bons);
         }
     }
     

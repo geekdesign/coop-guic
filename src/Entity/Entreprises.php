@@ -19,7 +19,10 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ApiResource(
  *   normalizationContext={
  *      "groups" = {"entreprises_read"}
- * }
+ * },
+ *   denormalizationContext={
+ *        "disable_type_enforcement"=true
+ *   }
  * )
  * @ApiFilter(SearchFilter::class)
  * @ApiFilter(OrderFilter::class)
@@ -162,12 +165,12 @@ class Entreprises
         return $this;
     }
 
-    public function getNpa(): ?int
+    public function getNpa()
     {
         return $this->npa;
     }
 
-    public function setNpa(?int $npa): self
+    public function setNpa($npa): self
     {
         $this->npa = $npa;
 

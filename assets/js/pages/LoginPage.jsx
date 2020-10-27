@@ -4,7 +4,7 @@ import AuthAPI from '../services/authAPI';
 import AuthContext from '../contexts/AuthContext';
 import Field from '../components/forms/Field';
 
-const LoginPage = ({history }) => {
+const LoginPage = ({ history }) => {
 
     const { setIsAuthenticated } = useContext(AuthContext);
 

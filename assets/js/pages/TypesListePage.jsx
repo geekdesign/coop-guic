@@ -2,19 +2,20 @@ import React, { useEffect, useState } from 'react';
 import { Button, Table } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import Pagination from '../components/Pagination';
-import TechniciensAPI from '../services/techniciensAPI';
+import TypesAPI from '../services/typesAPI';
 
-const TechniciensListePage = (props) => {
-    
-    const [techniciens, setTechniciens] = useState([]);
+
+const TypesListePage = (props) => {
+
+    const [types, setTypes] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [search, setSearch] = useState("");
 
     // Fonction asynchrone qui récupère la liste des magasins 
-    const fetchTechniciens = async () => {
+    const fetchTypes = async () => {
         try {
-            const data = await TechniciensAPI.findAll();
-            setTechniciens(data);
+            const data = await TypesAPI.findAll();
+            setTypes(data);
         }catch (error) {
             console.log(error.response);
         }
@@ -22,20 +23,20 @@ const TechniciensListePage = (props) => {
 
     //Au chargement je charge la liste des magasins
     useEffect(() => {
-        fetchTechniciens();
+        fetchTypes()
     }, []);
 
     // Fonction qui permet de supprimer un pdv
     const handleDelete = async id => {
         //On créer une copie de la liste au cas ou la suppression ne focntionnerait pas
-        const originalTechniciens = [...techniciens];
+        const originalTypes = [...types];
         //On efface de la liste l'objet à effacer
-        setTechniciens(techniciens.filter(technicien => technicien.id !== id))
+        setTypes(types.filter(types => types.id !== id))
         //On essaye de faire une requête serveur pour la suppression de l'élément dans la liste si sa ne marche pas on renvoi une erreure
         try {
-            await TechniciensAPI.delete(id)
+            await TypesAPI.delete(id)
         }catch(error) {
-            setTechniciens(originalTechniciens);
+            setTypes(originalTypes);
             console.log(error.response);
         }
     };
@@ -52,15 +53,14 @@ const TechniciensListePage = (props) => {
     const itemsPerPage = 10;
 
     //Filtrage des magasin en fonction de la recherche
-    const filteredTechniciens = techniciens.filter( 
+    const filteredTypes = types.filter( 
         t => 
-            t.nom.toLowerCase().includes(search.toLowerCase()) ||
-            t.prenom.toLowerCase().includes(search.toLowerCase())
+            t.nom.toLowerCase().includes(search.toLowerCase())
     ); 
 
     //Pagination des données
-    const paginatedTechniciens = Pagination.getData(
-        filteredTechniciens,
+    const paginatedTypes = Pagination.getData(
+        filteredTypes,
         currentPage, 
         itemsPerPage
     );
@@ -68,14 +68,14 @@ const TechniciensListePage = (props) => {
     return ( 
         <>
         <div className="mb-3 d-flex justify-content-between align-items-center">
-            <h2>Liste des techniciens</h2>
-            <Link to="/techniciens/new" className="btn btn-primary" >Ajouter un technicien</Link>
+            <h2>Liste des points de vente</h2>
+            <Link to="/types/new" className="btn btn-primary" >Créer un nouveau point de vente</Link>
         </div>
 
         <div className=" mb-4 form-group">
             <input 
                 type="text"
-                placeholder="Rechercher par Nom ou prénom.."
+                placeholder="Rechercher par Nom ..."
                 className="form-control"
                 onChange={handleSearch}
                 value={search}
@@ -85,25 +85,16 @@ const TechniciensListePage = (props) => {
             <thead>
                 <tr>
                     <th>Nom</th>
-                    <th>Prénom</th>
-                    <th>Téléphone</th>
-                    <th>Email</th>
-                    <th>Nbrs de bons</th>
                     <th/>
                 </tr>
             </thead>
             <tbody>
-                {paginatedTechniciens.map(technicien =>
-                <tr key={technicien.id}>
-                    <td>{technicien.nom}</td>
-                    <td>{technicien.prenom}</td>
-                    <td>{technicien.telephone}</td>
-                    <td>{technicien.mail}</td>
-                    <td>{technicien.bons.length}</td>
+                {paginatedTypes.map(type =>
+                <tr key={type.id}>
+                    <td>{type.nom}</td>
                     <td>
-                        <Button className="mr-2" variant="primary" size="sm">Voir</Button>
-                        <Link className="btn btn-success btn-sm mr-2"to={"/techniciens/" + technicien.id} >Modifier</Link>
-                        <Button onClick={() => handleDelete(technicien.id)} disabled={technicien.bons.length > 0} variant="danger" size="sm">Supprimer</Button>
+                        <Link className="btn btn-success btn-sm mr-2"to={"/types/" + type.id} >Modifier</Link>
+                        <Button onClick={() => handleDelete(type.id)} disabled={type.bons.length > 0} variant="danger" size="sm">Supprimer</Button>
                     </td>
                 </tr>
                     )}
@@ -111,11 +102,11 @@ const TechniciensListePage = (props) => {
             </tbody>
         </Table>
             
-            {itemsPerPage < filteredTechniciens.length && ( 
+            {itemsPerPage < filteredTypes.length && ( 
                 <Pagination 
                     currentPage={currentPage} 
                     itemsPerPage={itemsPerPage} 
-                    length={filteredTechniciens.length} 
+                    length={filteredTypes.length} 
                     onPageChanged={handleChangePage}
                 />
             )}
@@ -123,4 +114,4 @@ const TechniciensListePage = (props) => {
      );
 }
  
-export default TechniciensListePage;
+export default TypesListePage;

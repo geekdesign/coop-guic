@@ -2,19 +2,20 @@ import React, { useEffect, useState } from 'react';
 import { Button, Table } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import Pagination from '../components/Pagination';
-import TechniciensAPI from '../services/techniciensAPI';
+import EntreprisesAPI from '../services/entreprisesAPI';
 
-const TechniciensListePage = (props) => {
-    
-    const [techniciens, setTechniciens] = useState([]);
+
+const EntreprisesListePage = (props) => {
+
+    const [entreprises, setEntreprises] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [search, setSearch] = useState("");
 
     // Fonction asynchrone qui récupère la liste des magasins 
-    const fetchTechniciens = async () => {
+    const fetchEntreprises = async () => {
         try {
-            const data = await TechniciensAPI.findAll();
-            setTechniciens(data);
+            const data = await EntreprisesAPI.findAll();
+            setEntreprises(data);
         }catch (error) {
             console.log(error.response);
         }
@@ -22,20 +23,20 @@ const TechniciensListePage = (props) => {
 
     //Au chargement je charge la liste des magasins
     useEffect(() => {
-        fetchTechniciens();
+        fetchEntreprises()
     }, []);
 
     // Fonction qui permet de supprimer un pdv
     const handleDelete = async id => {
         //On créer une copie de la liste au cas ou la suppression ne focntionnerait pas
-        const originalTechniciens = [...techniciens];
+        const originalEntreprises = [...entreprises];
         //On efface de la liste l'objet à effacer
-        setTechniciens(techniciens.filter(technicien => technicien.id !== id))
+        setEntreprises(entreprises.filter(entreprise => entreprise.id !== id))
         //On essaye de faire une requête serveur pour la suppression de l'élément dans la liste si sa ne marche pas on renvoi une erreure
         try {
-            await TechniciensAPI.delete(id)
+            await EntreprisesAPI.delete(id)
         }catch(error) {
-            setTechniciens(originalTechniciens);
+            setEntreprises(originalEntreprises);
             console.log(error.response);
         }
     };
@@ -52,15 +53,16 @@ const TechniciensListePage = (props) => {
     const itemsPerPage = 10;
 
     //Filtrage des magasin en fonction de la recherche
-    const filteredTechniciens = techniciens.filter( 
-        t => 
-            t.nom.toLowerCase().includes(search.toLowerCase()) ||
-            t.prenom.toLowerCase().includes(search.toLowerCase())
+    const filteredEntreprises = entreprises.filter( 
+        e => 
+            e.nom.toLowerCase().includes(search.toLowerCase()) ||
+            e.rue.toLowerCase().includes(search.toLowerCase()) ||
+            e.lieu.toLowerCase().includes(search.toLowerCase())
     ); 
 
     //Pagination des données
-    const paginatedTechniciens = Pagination.getData(
-        filteredTechniciens,
+    const paginatedEntreprises = Pagination.getData(
+        filteredEntreprises,
         currentPage, 
         itemsPerPage
     );
@@ -68,14 +70,14 @@ const TechniciensListePage = (props) => {
     return ( 
         <>
         <div className="mb-3 d-flex justify-content-between align-items-center">
-            <h2>Liste des techniciens</h2>
-            <Link to="/techniciens/new" className="btn btn-primary" >Ajouter un technicien</Link>
+            <h2>Liste des entreprises</h2>
+            <Link to="/entreprises/new" className="btn btn-primary" >Ajouter une nouvelle entreprise</Link>
         </div>
 
         <div className=" mb-4 form-group">
             <input 
                 type="text"
-                placeholder="Rechercher par Nom ou prénom.."
+                placeholder="Rechercher par Nom, Rue ou Lieu..."
                 className="form-control"
                 onChange={handleSearch}
                 value={search}
@@ -85,25 +87,29 @@ const TechniciensListePage = (props) => {
             <thead>
                 <tr>
                     <th>Nom</th>
-                    <th>Prénom</th>
+                    <th>Rue</th>
+                    <th className="text-center">NPA</th>
+                    <th>Lieu</th>
                     <th>Téléphone</th>
+                    <th>Fax</th>
                     <th>Email</th>
-                    <th>Nbrs de bons</th>
                     <th/>
                 </tr>
             </thead>
             <tbody>
-                {paginatedTechniciens.map(technicien =>
-                <tr key={technicien.id}>
-                    <td>{technicien.nom}</td>
-                    <td>{technicien.prenom}</td>
-                    <td>{technicien.telephone}</td>
-                    <td>{technicien.mail}</td>
-                    <td>{technicien.bons.length}</td>
+                {paginatedEntreprises.map(entreprise =>
+                <tr key={entreprise.id}>
+                    <td>{entreprise.nom}</td>
+                    <td>{entreprise.rue}</td>
+                    <td className="text-center">{entreprise.npa}</td>
+                    <td>{entreprise.lieu}</td>
+                    <td>{entreprise.telephone}</td>
+                    <td>{entreprise.fax}</td>
+                    <td>{entreprise.mail}</td>
                     <td>
                         <Button className="mr-2" variant="primary" size="sm">Voir</Button>
-                        <Link className="btn btn-success btn-sm mr-2"to={"/techniciens/" + technicien.id} >Modifier</Link>
-                        <Button onClick={() => handleDelete(technicien.id)} disabled={technicien.bons.length > 0} variant="danger" size="sm">Supprimer</Button>
+                        <Link className="btn btn-success btn-sm mr-2"to={"/entreprises/" + entreprise.id} >Modifier</Link>
+                        <Button onClick={() => handleDelete(entreprise.id)} disabled={entreprise.bons.length > 0} variant="danger" size="sm">Supprimer</Button>
                     </td>
                 </tr>
                     )}
@@ -111,11 +117,11 @@ const TechniciensListePage = (props) => {
             </tbody>
         </Table>
             
-            {itemsPerPage < filteredTechniciens.length && ( 
+            {itemsPerPage < filteredEntreprises.length && ( 
                 <Pagination 
                     currentPage={currentPage} 
                     itemsPerPage={itemsPerPage} 
-                    length={filteredTechniciens.length} 
+                    length={filteredEntreprises.length} 
                     onPageChanged={handleChangePage}
                 />
             )}
@@ -123,4 +129,4 @@ const TechniciensListePage = (props) => {
      );
 }
  
-export default TechniciensListePage;
+export default EntreprisesListePage;
