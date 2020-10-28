@@ -27,6 +27,7 @@ import ComptePage from './pages/ComptePage';
 import ComptesListePage from './pages/ComptesListePage';
 import UserPage from './pages/UserPage';
 import UsersListePage from './pages/UsersListePage';
+import TestPage from './pages/TestPage';
 
 AuthAPI.setup();
 
@@ -47,6 +48,7 @@ const App = () => {
                 <Row >
                     <Col xs={12} md={12} p={5} className="p-4" >
                         <Switch>
+                            <PrivateRoute path="/test" component={TestPage} />
                             <PrivateRoute path="/users/:id" component={UserPage} />
                             <PrivateRoute path="/users" component={UsersListePage} />
                             <PrivateRoute path="/comptes/:id" component={ComptePage} />

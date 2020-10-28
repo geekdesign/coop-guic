@@ -109,7 +109,7 @@ const BonsListePage = () => {
                 />
             </div>
             <br/>
-            <Table  className="table-hover">
+            <Table className="table-hover">
                 <thead>
                     <tr>
                         <th>N°</th>
