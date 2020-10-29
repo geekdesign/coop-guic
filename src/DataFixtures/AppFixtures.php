@@ -7,7 +7,6 @@ use App\Entity\Categories;
 use App\Entity\Comptes;
 use App\Entity\Departements;
 use App\Entity\Entreprises;
-use App\Entity\Etats;
 use App\Entity\Kwfs;
 use App\Entity\Pdvs;
 use App\Entity\Techniciens;
