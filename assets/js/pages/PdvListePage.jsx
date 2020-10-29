@@ -64,6 +64,15 @@ const PdvListePage = (props) => {
 			headerFormatter: headerFormatter,
 		},
 		{
+			dataField: "gerant",
+			text: "Gérant/e",
+			sort: true,
+			filter: textFilter({
+				placeholder: "Entrer un nom...",
+			}),
+			headerFormatter: headerFormatter,
+		},
+		{
 			dataField: "telephone",
 			text: "Téléphone",
 			sort: true,
@@ -134,7 +143,7 @@ const PdvListePage = (props) => {
 							<div>
 								<strong>Gérant/e: </strong>
 								<br />
-								<p>Bla Bla</p>
+								<p>{modalInfo.gerant}</p>
 								<strong>Adresse: </strong>
 								<br />
 								{modalInfo.rue} <br />

@@ -55,10 +55,10 @@ class AppFixtures extends Fixture
         $manager->persist($departement3);
 
         $entrepriseArray=array();
-        for ($e=0; $e < 40; $e++) { 
+        for ($e=0; $e < 100; $e++) { 
             $entreprise = new Entreprises();
             $entreprise ->setNom($faker->company)
-                        ->setRue($faker->address)
+                        ->setRue($faker->streetAddress)
                         ->setNpa($faker->postcode)
                         ->setLieu($faker->city)
                         ->setTelephone($faker->e164PhoneNumber)
@@ -73,7 +73,7 @@ class AppFixtures extends Fixture
         }
 
         $technicienArray=array();
-        for ($t=0; $t < 10; $t++) { 
+        for ($t=0; $t < 20; $t++) { 
             $technicien = new Techniciens();
             $technicien ->setNom($faker->lastName())
                         ->setDepartement($faker->randomElement([$departement1, $departement2, $departement3]))
@@ -117,7 +117,7 @@ class AppFixtures extends Fixture
         }
 
         $compteArray=array();
-        for ($c=0; $c < 40; $c++) { 
+        for ($c=0; $c < 50; $c++) { 
             $compte = new Comptes();
             $compte ->setNum($faker->numberBetween($min = 7000, $max = 9900))
                     ->setNom($faker->sentence($nbWords = 5, $variableNbWords = true))
@@ -172,15 +172,19 @@ class AppFixtures extends Fixture
 
             $lieu = $faker->city;
             $nom = $lieu . " " . $faker->word;
+            $prenomGerant = $faker->firstName;
+            $nameGerant = $faker->lastName;
+            $fullNameGerant = $nameGerant . " " .  $prenomGerant;
             $format = $faker->randomElement($array = array ('a','b','c')) . $faker->numberBetween($min = 150, $max = 3000);
 
             $pdv->setSap($faker->numberBetween($min = 1000, $max = 5800))
                 ->setNom($nom)
-                ->setRue($faker->address)
+                ->setRue($faker->streetAddress)
                 ->setLieu($lieu)
                 ->setNpa($faker->postcode)
                 ->setTelephone($faker->e164PhoneNumber)
                 ->setFax($faker->e164PhoneNumber)
+                ->setGerant($fullNameGerant)
                 ->setEmail($faker->email)
                 ->setFormat($format)
                 ->setSupprimer(false);
@@ -197,7 +201,7 @@ class AppFixtures extends Fixture
             $bon = new Bons;
             $remarque = $faker->text($maxNbChars = 100); 
             $bon->setCreatedAt($faker->dateTimeBetween($startDate = '-6 month', $endDate = 'now', $timezone = null))
-                ->setBonsDepartement($faker->randomElement([$departement1, $departement2, $departement3]))
+                ->setDepartement($faker->randomElement([$departement1, $departement2, $departement3]))
                 ->setTechnicien($faker->randomElement($technicienArray))
                 ->setEntreprise($faker->randomElement($entrepriseArray))
                 ->setCreatedBy($faker->randomElement($userArray))

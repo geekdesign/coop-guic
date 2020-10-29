@@ -1,36 +1,34 @@
-import axios from 'axios';
+import axios from "axios";
+import { TECHNICIENS_API } from "../config";
 
 function findAll() {
-    return axios
-        .get("http://127.0.0.1:8000/api/techniciens")
-        .then(response => response.data["hydra:member"]);
+	return axios
+		.get(TECHNICIENS_API)
+		.then((response) => response.data["hydra:member"]);
 }
 
 function deleteTechniciens(id) {
-    return axios
-        .delete("http://127.0.0.1:8000/api/techniciens/" + id);
+	return axios.delete(TECHNICIENS_API + "/" + id);
 }
 
 function find(id) {
-    return axios
-        .get("http://127.0.0.1:8000/api/techniciens/" + id)
-        .then(response => response.data);
+	return axios
+		.get(TECHNICIENS_API + "/" + id)
+		.then((response) => response.data);
 }
 
 function update(id, technicien) {
-    return axios
-        .put("http://127.0.0.1:8000/api/techniciens/" + id, technicien);
+	return axios.put(TECHNICIENS_API + "/" + id, technicien);
 }
 
-function create(technicien){
-    return axios
-    .post("http://127.0.0.1:8000/api/techniciens", technicien);
+function create(technicien) {
+	return axios.post(TECHNICIENS_API, technicien);
 }
 
-export default{
-    findAll,
-    delete: deleteTechniciens,
-    find,
-    update,
-    create
+export default {
+	findAll,
+	delete: deleteTechniciens,
+	find,
+	update,
+	create,
 };

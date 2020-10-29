@@ -1,36 +1,30 @@
-import axios from 'axios';
+import axios from "axios";
+import { PDVS_API } from "../config";
 
 function findAll() {
-    return axios
-        .get("http://127.0.0.1:8000/api/pdvs")
-        .then(response => response.data["hydra:member"]);
+	return axios.get(PDVS_API).then((response) => response.data["hydra:member"]);
 }
 
 function deletePdvs(id) {
-    return axios
-        .delete("http://127.0.0.1:8000/api/pdvs/" + id);
+	return axios.delete(PDVS_API + "/" + id);
 }
 
 function find(id) {
-    return axios
-        .get("http://127.0.0.1:8000/api/pdvs/" + id)
-        .then(response => response.data);
+	return axios.get(PDVS_API + "/" + id).then((response) => response.data);
 }
 
 function update(id, pdv) {
-    return axios
-        .put("http://127.0.0.1:8000/api/pdvs/" + id, pdv);
+	return axios.put(PDVS_API + "/" + id, pdv);
 }
 
-function create(pdv){
-    return axios
-    .post("http://127.0.0.1:8000/api/pdvs", pdv);
+function create(pdv) {
+	return axios.post(PDVS_API, pdv);
 }
 
-export default{
-    findAll,
-    delete: deletePdvs,
-    find,
-    update,
-    create
+export default {
+	findAll,
+	delete: deletePdvs,
+	find,
+	update,
+	create,
 };

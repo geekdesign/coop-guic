@@ -1,36 +1,30 @@
-import axios from 'axios';
+import axios from "axios";
+import { USERS_API } from "../config";
 
 function findAll() {
-    return axios
-        .get("http://127.0.0.1:8000/api/users")
-        .then(response => response.data["hydra:member"]);
+	return axios.get(USERS_API).then((response) => response.data["hydra:member"]);
 }
 
 function deleteUsers(id) {
-    return axios
-        .delete("http://127.0.0.1:8000/api/users/" + id);
+	return axios.delete(USERS_API + "/" + id);
 }
 
 function find(id) {
-    return axios
-        .get("http://127.0.0.1:8000/api/users/" + id)
-        .then(response => response.data);
+	return axios.get(USERS_API + "/" + id).then((response) => response.data);
 }
 
 function update(id, user) {
-    return axios
-        .put("http://127.0.0.1:8000/api/users/" + id, user);
+	return axios.put(USERS_API + "/" + id, user);
 }
 
-function create(user){
-    return axios
-    .post("http://127.0.0.1:8000/api/users", user);
+function create(user) {
+	return axios.post(USERS_API, user);
 }
 
-export default{
-    findAll,
-    delete: deleteUsers,
-    find,
-    update,
-    create
+export default {
+	findAll,
+	delete: deleteUsers,
+	find,
+	update,
+	create,
 };

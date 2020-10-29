@@ -1,17 +1,15 @@
-import axios from 'axios';
+import axios from "axios";
+import { BONS_API } from "../config";
 
 function findAll() {
-    return axios
-        .get("http://127.0.0.1:8000/api/bons")
-        .then(response => response.data["hydra:member"]);
+	return axios.get(BONS_API).then((response) => response.data["hydra:member"]);
 }
 
 function deleteBons(id) {
-    return axios
-        .delete("http://12.0.0.1:8000/api/bons/" + id);
+	return axios.delete(BONS_API + "/" + id);
 }
 
-export default{
-    findAll,
-    delete: deleteBons
+export default {
+	findAll,
+	delete: deleteBons,
 };

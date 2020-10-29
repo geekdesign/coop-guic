@@ -1,36 +1,34 @@
-import axios from 'axios';
+import axios from "axios";
+import { ENTREPRISES_API } from "../config";
 
 function findAll() {
-    return axios
-        .get("http://127.0.0.1:8000/api/entreprises")
-        .then(response => response.data["hydra:member"]);
+	return axios
+		.get(ENTREPRISES_API)
+		.then((response) => response.data["hydra:member"]);
 }
 
 function deleteEntrprise(id) {
-    return axios
-        .delete("http://127.0.0.1:8000/api/entreprises/" + id);
+	return axios.delete(ENTREPRISES_API + "/" + id);
 }
 
 function find(id) {
-    return axios
-        .get("http://127.0.0.1:8000/api/entreprises/" + id)
-        .then(response => response.data);
+	return axios
+		.get(ENTREPRISES_API + "/" + id)
+		.then((response) => response.data);
 }
 
 function update(id, entreprise) {
-    return axios
-        .put("http://127.0.0.1:8000/api/entreprises/" + id, entreprise);
+	return axios.put(ENTREPRISES_API + "/" + id, entreprise);
 }
 
-function create(entreprise){
-    return axios
-    .post("http://127.0.0.1:8000/api/entreprises", entreprise);
+function create(entreprise) {
+	return axios.post(ENTREPRISES_API, entreprise);
 }
 
-export default{
-    findAll,
-    delete: deleteEntrprise,
-    find,
-    update,
-    create
+export default {
+	findAll,
+	delete: deleteEntrprise,
+	find,
+	update,
+	create,
 };

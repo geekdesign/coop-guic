@@ -137,6 +137,12 @@ class Pdvs
      */
     private $bons;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"pdvs_read", "bons_read"})
+     */
+    private $gerant;
+
     public function __construct()
     {
         $this->bons = new ArrayCollection();
@@ -293,6 +299,18 @@ class Pdvs
                 $bon->setPdv(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getGerant(): ?string
+    {
+        return $this->gerant;
+    }
+
+    public function setGerant(?string $gerant): self
+    {
+        $this->gerant = $gerant;
 
         return $this;
     }

@@ -1,36 +1,32 @@
-import axios from 'axios';
+import axios from "axios";
+import { CATEGORIES_API } from "../config";
 
 function findAll() {
-    return axios
-        .get("http://127.0.0.1:8000/api/categories")
-        .then(response => response.data["hydra:member"]);
+	return axios
+		.get(CATEGORIES_API)
+		.then((response) => response.data["hydra:member"]);
 }
 
 function deleteCategories(id) {
-    return axios
-        .delete("http://127.0.0.1:8000/api/categories/" + id);
+	return axios.delete(CATEGORIES_API + "/" + id);
 }
 
 function find(id) {
-    return axios
-        .get("http://127.0.0.1:8000/api/categories/" + id)
-        .then(response => response.data);
+	return axios.get(CATEGORIES_API + "/" + id).then((response) => response.data);
 }
 
 function update(id, categorie) {
-    return axios
-        .put("http://127.0.0.1:8000/api/categories/" + id, categorie);
+	return axios.put(CATEGORIES_API + "/" + id, categorie);
 }
 
-function create(categorie){
-    return axios
-    .post("http://127.0.0.1:8000/api/categories", categorie);
+function create(categorie) {
+	return axios.post(CATEGORIES_API, categorie);
 }
 
-export default{
-    findAll,
-    delete: deleteCategories,
-    find,
-    update,
-    create
+export default {
+	findAll,
+	delete: deleteCategories,
+	find,
+	update,
+	create,
 };

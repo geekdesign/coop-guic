@@ -1,36 +1,30 @@
-import axios from 'axios';
+import axios from "axios";
+import { TYPES_API } from "../config";
 
 function findAll() {
-    return axios
-        .get("http://127.0.0.1:8000/api/types")
-        .then(response => response.data["hydra:member"]);
+	return axios.get(TYPES_API).then((response) => response.data["hydra:member"]);
 }
 
 function deleteTypes(id) {
-    return axios
-        .delete("http://127.0.0.1:8000/api/types/" + id);
+	return axios.delete(TYPES_API + "/" + id);
 }
 
 function find(id) {
-    return axios
-        .get("http://127.0.0.1:8000/api/types/" + id)
-        .then(response => response.data);
+	return axios.get(TYPES_API + "/" + id).then((response) => response.data);
 }
 
 function update(id, type) {
-    return axios
-        .put("http://127.0.0.1:8000/api/types/" + id, type);
+	return axios.put(TYPES_API + "/" + id, type);
 }
 
-function create(type){
-    return axios
-    .post("http://127.0.0.1:8000/api/types", type);
+function create(type) {
+	return axios.post(TYPES_API, type);
 }
 
-export default{
-    findAll,
-    delete: deleteTypes,
-    find,
-    update,
-    create
+export default {
+	findAll,
+	delete: deleteTypes,
+	find,
+	update,
+	create,
 };
