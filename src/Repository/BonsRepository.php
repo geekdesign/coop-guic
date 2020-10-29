@@ -21,15 +21,21 @@ class BonsRepository extends ServiceEntityRepository
     }
 
     public function findNextNumBon(User $user){
-        return $this->createQueryBuilder("b")
-                    ->select("count(b.numBon)")
-                    ->join("b.createdBy", "u")
-                    ->where("u = :user")
-                    ->setParameter("user", $user)
-                    ->orderBy("b.numBon", "DESC")
-                    ->setMaxResults(1)
-                    ->getQuery()
-                    ->getSingleScalarResult() + 1;
+
+        try {
+            return $this->createQueryBuilder("b")
+                        ->select("count(b.numBon)")
+                        ->join("b.createdBy", "u")
+                        ->where("u = :user")
+                        ->setParameter("user", $user)
+                        ->orderBy("b.numBon", "DESC")
+                        ->setMaxResults(1)
+                        ->getQuery()
+                        ->getSingleScalarResult() + 1;    
+        } catch (\Exception $e) {
+            return 1;
+        }
+
     }
 
     // /**
