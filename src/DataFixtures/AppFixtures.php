@@ -91,13 +91,35 @@ class AppFixtures extends Fixture
         $admin = new User();
         $adminhash = $this->encoder->encodePassword($admin, "scpie");
         $admin  ->setUsername('scpie')
-                ->setDepartement($faker->randomElement([$departement1, $departement2, $departement3]))
+                ->setDepartement($departement3)
                 ->setNom('Schütz')
                 ->setPrenom('Pierre-Alain')
-                ->setMail($faker->email)
+                ->setMail("schutz.pa@gmail.com")
                 ->setPassword($adminhash)
                 ->setSupprimer(false);
         $manager->persist($admin);
+
+        $romain = new User();
+        $romainhash = $this->encoder->encodePassword($romain, "rorom");
+        $romain  ->setUsername('rorom')
+                ->setDepartement($departement3)
+                ->setNom('Rosset')
+                ->setPrenom('Romain')
+                ->setMail($faker->email)
+                ->setPassword($romainhash)
+                ->setSupprimer(false);
+        $manager->persist($romain);
+
+        $guic = new User();
+        $guichash = $this->encoder->encodePassword($guic, "testguic");
+        $guic  ->setUsername('test')
+                ->setDepartement($departement3)
+                ->setNom('Doe')
+                ->setPrenom('John')
+                ->setMail($faker->email)
+                ->setPassword($guichash)
+                ->setSupprimer(false);
+        $manager->persist($guic);
 
         $userArray=array();
         for ($u=0; $u < 15; $u++) { 
